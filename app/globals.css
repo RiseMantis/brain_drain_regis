@@ -718,3 +718,168 @@ body {
   }
 }
 
+/* ══ 3D FIRE VISUAL MOTION EFFECT ══ */
+.fire-motion-layer {
+  animation: fire-3d-breathe 7.5s ease-in-out infinite;
+}
+
+@keyframes fire-3d-breathe {
+  0%, 100% {
+    transform: perspective(900px) rotateX(4deg) scale(1.03) translateY(0);
+    opacity: 0.42;
+  }
+  50% {
+    transform: perspective(900px) rotateX(1.5deg) scale(1.08) translateY(-8px);
+    opacity: 0.68;
+  }
+}
+
+.fire-horizon-beam {
+  animation: fire-horizon-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes fire-horizon-pulse {
+  0%, 100% {
+    opacity: 0.45;
+    filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.7));
+    transform: translateY(-50%) scaleY(1);
+  }
+  50% {
+    opacity: 0.92;
+    filter: drop-shadow(0 0 24px rgba(249, 115, 22, 0.95)) drop-shadow(0 0 44px rgba(239, 68, 68, 0.85));
+    transform: translateY(-50%) scaleY(1.8);
+  }
+}
+
+@keyframes fire-ember-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6);
+  }
+  20% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(14px, -110px, 30px) scale(1.3);
+  }
+}
+
+/* ══ FLASHING ORANGE + RED TABS (PROFESSIONAL SHINOBI FLAME) ══ */
+.fire-tab,
+.round-card,
+.prize-card {
+  position: relative;
+  background: linear-gradient(155deg, rgba(25, 29, 36, 0.92) 0%, rgba(32, 22, 22, 0.92) 100%) !important;
+  border: 1px solid rgba(249, 115, 22, 0.28) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(239, 68, 68, 0.05);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Ambient Flashing Red+Orange Background Aura */
+.fire-tab::before,
+.round-card::before,
+.prize-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.16) 0%, rgba(239, 68, 68, 0.12) 45%, transparent 75%);
+  opacity: 0.65;
+  animation: fire-tab-flash 3.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Pulsing Fiery Border Top Highlight */
+.fire-tab::after,
+.round-card::after,
+.prize-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, #ef4444 30%, #f97316 50%, #ef4444 70%, transparent 100%);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.8), 0 0 20px rgba(239, 68, 68, 0.6);
+  animation: fire-border-glow 2.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure card children sit above background effect */
+.fire-tab > *,
+.round-card > *,
+.prize-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover Flashing Burst & Fiery Strike */
+.fire-tab:hover,
+.round-card:hover,
+.prize-card:hover {
+  border-color: rgba(249, 115, 22, 0.75) !important;
+  transform: translateY(-5px) scale(1.015) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.5),
+              0 0 28px rgba(239, 68, 68, 0.38),
+              0 0 14px rgba(249, 115, 22, 0.45) !important;
+}
+
+.fire-tab:hover::before,
+.round-card:hover::before,
+.prize-card:hover::before {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 10%, rgba(251, 146, 60, 0.28) 0%, rgba(239, 68, 68, 0.22) 50%, transparent 80%);
+  animation: fire-hover-burst 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes fire-tab-flash {
+  0%, 100% {
+    opacity: 0.45;
+    filter: brightness(0.95);
+  }
+  50% {
+    opacity: 0.9;
+    filter: brightness(1.35) drop-shadow(0 0 14px rgba(239, 68, 68, 0.35));
+  }
+}
+
+@keyframes fire-border-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scaleX(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.05);
+  }
+}
+
+@keyframes fire-hover-burst {
+  0% { filter: brightness(1.1); }
+  100% { filter: brightness(1.5) drop-shadow(0 0 16px rgba(249, 115, 22, 0.45)); }
+}
+
+/* Light Theme Adaptation */
+[data-theme="light"] .fire-tab,
+[data-theme="light"] .round-card,
+[data-theme="light"] .prize-card {
+  background: linear-gradient(155deg, rgba(255, 252, 247, 0.95) 0%, rgba(254, 242, 237, 0.95) 100%) !important;
+  border-color: rgba(234, 88, 12, 0.25) !important;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .fire-tab:hover,
+[data-theme="light"] .round-card:hover,
+[data-theme="light"] .prize-card:hover {
+  border-color: rgba(234, 88, 12, 0.6) !important;
+  box-shadow: 0 14px 32px rgba(234, 88, 12, 0.18), 0 0 20px rgba(239, 68, 68, 0.15) !important;
+}
+
+

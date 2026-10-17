@@ -1,5 +1,7 @@
 "use client";
 
+import FireVisualEffect from "./FireVisualEffect";
+
 const ROUNDS = [
   {
     id: "code-battle",
@@ -58,14 +60,19 @@ export default function RoundsSection() {
       id="rounds"
       aria-label="Challenge Rounds"
       style={{
+        position: "relative",
         background: "var(--page-bg)",
         padding: "clamp(64px, 9vw, 120px) clamp(20px, 5vw, 80px)",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {/* 3D Visual Motion Fire Effect Background */}
+      <FireVisualEffect intensity="high" showBeam={true} />
+
+      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Section header */}
         <div style={{ marginBottom: "56px", maxWidth: "560px" }} className="reveal-on-scroll">
-          <p className="eyebrow" style={{ marginBottom: "12px" }}>
+          <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)" }}>
             ⚔️ The Challenge
           </p>
           <h2 className="section-heading">
@@ -92,15 +99,19 @@ export default function RoundsSection() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "20px",
+            gap: "24px",
           }}
         >
           {ROUNDS.map((round, index) => (
             <article
               key={round.id}
-              className="round-card reveal-on-scroll"
+              className="round-card fire-tab reveal-on-scroll"
               id={`round-${round.id}`}
-              style={{ transitionDelay: `${index * 120}ms` }}
+              style={{
+                borderRadius: "20px",
+                padding: "30px 26px",
+                transitionDelay: `${index * 120}ms`,
+              }}
             >
               {/* Number + chip */}
               <div
@@ -114,8 +125,9 @@ export default function RoundsSection() {
                 <span
                   className="font-display"
                   style={{
-                    fontSize: "40px",
-                    color: "var(--border-default)",
+                    fontSize: "42px",
+                    color: "rgba(249, 115, 22, 0.4)",
+                    textShadow: "0 0 16px rgba(239, 68, 68, 0.25)",
                     lineHeight: 1,
                   }}
                 >
@@ -130,13 +142,14 @@ export default function RoundsSection() {
                   width: "52px",
                   height: "52px",
                   borderRadius: "14px",
-                  background: "var(--surface-raised)",
+                  background: "linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(249, 115, 22, 0.2))",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   color: "var(--action-primary)",
-                  marginBottom: "16px",
-                  border: "1px solid var(--border-subtle)",
+                  marginBottom: "18px",
+                  border: "1px solid rgba(249, 115, 22, 0.35)",
+                  boxShadow: "0 0 16px rgba(239, 68, 68, 0.22)",
                 }}
               >
                 {round.icon}

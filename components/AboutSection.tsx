@@ -1,5 +1,7 @@
 "use client";
 
+import FireVisualEffect from "./FireVisualEffect";
+
 const PILLARS = [
   {
     icon: "⚡",
@@ -29,11 +31,16 @@ export default function AboutSection() {
       id="about"
       aria-label="About Brain Drain"
       style={{
+        position: "relative",
         background: "var(--page-bg-secondary)",
         padding: "clamp(64px, 9vw, 120px) clamp(20px, 5vw, 80px)",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {/* 3D Visual Motion Fire Effect Background */}
+      <FireVisualEffect intensity="normal" showBeam={true} />
+
+      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Two-column layout */}
         <div
           style={{
@@ -45,7 +52,7 @@ export default function AboutSection() {
         >
           {/* Left: copy */}
           <div className="reveal-on-scroll">
-            <p className="eyebrow" style={{ marginBottom: "12px" }}>
+            <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)" }}>
               🌀 About the Event
             </p>
             <h2 className="section-heading" style={{ marginBottom: "20px" }}>
@@ -79,11 +86,11 @@ export default function AboutSection() {
 
             {/* Mission statement */}
             <div
+              className="fire-tab"
               style={{
                 padding: "20px 24px",
-                borderLeft: "3px solid var(--action-primary)",
-                background: "var(--surface)",
-                borderRadius: "0 14px 14px 0",
+                borderLeft: "3.5px solid #ef4444",
+                borderRadius: "0 16px 16px 0",
               }}
             >
               <p
@@ -114,24 +121,33 @@ export default function AboutSection() {
               <div
                 key={pillar.title}
                 style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--border-subtle)",
-                  borderRadius: "16px",
-                  padding: "20px",
-                  transition: "border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+                  borderRadius: "18px",
+                  padding: "22px 20px",
                   transitionDelay: `${idx * 90}ms`,
                 }}
-                className="round-card reveal-on-scroll"
+                className="round-card fire-tab reveal-on-scroll"
               >
-                <span
-                  style={{ fontSize: "28px", display: "block", marginBottom: "10px" }}
+                <div
+                  style={{
+                    width: "44px",
+                    height: "44px",
+                    borderRadius: "12px",
+                    background: "rgba(249, 115, 22, 0.12)",
+                    border: "1px solid rgba(249, 115, 22, 0.25)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "22px",
+                    marginBottom: "12px",
+                    boxShadow: "0 0 12px rgba(239, 68, 68, 0.2)",
+                  }}
                   aria-hidden="true"
                 >
                   {pillar.icon}
-                </span>
+                </div>
                 <p
                   style={{
-                    fontSize: "15px",
+                    fontSize: "16px",
                     fontWeight: 700,
                     color: "var(--text-primary)",
                     marginBottom: "6px",
