@@ -52,6 +52,7 @@ export default function ScheduleSection() {
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Header */}
         <div
+          className="reveal-on-scroll"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr auto",
@@ -86,7 +87,7 @@ export default function ScheduleSection() {
         </div>
 
         {/* Timeline */}
-        <div style={{ display: "flex", gap: "clamp(40px, 6vw, 80px)" }}>
+        <div style={{ display: "flex", gap: "clamp(32px, 5vw, 64px)" }}>
           {/* Vertical line */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "6px" }}>
             <div
@@ -101,17 +102,19 @@ export default function ScheduleSection() {
               <div
                 key={event.id}
                 id={event.id}
+                className="reveal-on-scroll"
                 style={{
                   position: "relative",
                   display: "flex",
                   gap: "20px",
+                  transitionDelay: `${i * 100}ms`,
                 }}
               >
                 {/* Dot (positioned against the line) */}
                 <div
                   style={{
                     position: "absolute",
-                    left: `calc(-40px - clamp(40px, 6vw, 80px) / 2 - 6px)`,
+                    left: `calc(-32px - clamp(32px, 5vw, 64px) / 2 - 6px)`,
                     top: "4px",
                     display: "flex",
                     alignItems: "center",
@@ -126,13 +129,14 @@ export default function ScheduleSection() {
 
                 {/* Content */}
                 <div
+                  className="round-card"
                   style={{
                     flex: 1,
                     background: "var(--surface)",
                     border: "1px solid var(--border-subtle)",
                     borderRadius: "16px",
                     padding: "20px 24px",
-                    transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                    transition: "border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease",
                   }}
                 >
                   <div

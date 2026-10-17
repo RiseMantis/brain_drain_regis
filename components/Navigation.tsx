@@ -85,10 +85,34 @@ export default function Navigation() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      // Scroll spy logic
+      const sections = ["about", "rounds", "terminal", "schedule", "faq", "gallery", "prizes", "contact"];
+      const scrollPos = window.scrollY + 140;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el) {
+          const top = el.offsetTop;
+          if (scrollPos >= top) {
+            setActiveSection(`#${sections[i]}`);
+            return;
+          }
+        }
+      }
+
+      if (window.scrollY < 200) {
+        setActiveSection("");
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -114,37 +138,52 @@ export default function Navigation() {
           left: 0,
           right: 0,
           zIndex: 50,
-          height: scrolled ? "56px" : "64px",
+          height: scrolled ? "58px" : "66px",
           display: "flex",
           alignItems: "center",
-          paddingLeft: "clamp(20px, 4vw, 64px)",
-          paddingRight: "clamp(20px, 4vw, 64px)",
+          paddingLeft: "clamp(16px, 4vw, 64px)",
+          paddingRight: "clamp(16px, 4vw, 64px)",
           background: scrolled
             ? "var(--nav-bg-scrolled)"
             : "var(--nav-gradient)",
-          backdropFilter: scrolled ? "blur(16px)" : "blur(4px)",
+          backdropFilter: scrolled ? "blur(18px)" : "blur(6px)",
+          WebkitBackdropFilter: scrolled ? "blur(18px)" : "blur(6px)",
           borderBottom: scrolled ? "1px solid var(--border-subtle)" : "none",
-          transition: "height 0.2s ease, background 0.2s ease, border-color 0.2s ease",
+          transition: "height 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
+          boxShadow: scrolled ? "0 8px 24px rgba(0, 0, 0, 0.2)" : "none",
         }}
       >
         {/* Left: Logo */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-          <span style={{ color: "var(--action-primary)" }}>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            flexShrink: 0,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: 0,
+          }}
+          aria-label="Brain Drain home"
+        >
+          <span style={{ color: "var(--action-primary)", display: "flex" }}>
             <ShinobiEmblem />
           </span>
           <span
             className="font-display"
             style={{
-              fontSize: "14px",
+              fontSize: "15px",
               letterSpacing: "0.08em",
               color: "var(--text-primary)",
-              opacity: 0.9,
+              opacity: 0.95,
               whiteSpace: "nowrap",
             }}
           >
             BRAIN DRAIN
           </span>
-        </div>
+        </button>
 
         {/* Center: Nav links */}
         <nav
@@ -154,19 +193,31 @@ export default function Navigation() {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            gap: "clamp(16px, 2vw, 32px)",
+            gap: "clamp(10px, 1.6vw, 24px)",
           }}
         >
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.href}
-              className="nav-link"
-              onClick={() => handleNavClick(link.href)}
-              style={{ background: "none", border: "none", cursor: "pointer", padding: "4px 0" }}
-            >
-              {link.label}
-            </button>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.href;
+            return (
+              <button
+                key={link.href}
+                className={`nav-link ${isActive ? "active" : ""}`}
+                onClick={() => handleNavClick(link.href)}
+                style={{
+                  background: isActive ? "rgba(249, 115, 22, 0.12)" : "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "6px 12px",
+                  borderRadius: "9999px",
+                  color: isActive ? "var(--action-primary)" : "var(--text-secondary)",
+                  fontWeight: isActive ? 600 : 500,
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {link.label}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Right: Actions */}
@@ -190,9 +241,18 @@ export default function Navigation() {
           </button>
 
           <button
-            className="desktop-nav nav-link"
+            className={`desktop-nav nav-link ${activeSection === "#contact" ? "active" : ""}`}
             onClick={() => handleNavClick("#contact")}
-            style={{ background: "none", border: "none", cursor: "pointer", padding: "4px 0" }}
+            style={{
+              background: activeSection === "#contact" ? "rgba(249, 115, 22, 0.12)" : "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "6px 14px",
+              borderRadius: "9999px",
+              color: activeSection === "#contact" ? "var(--action-primary)" : "var(--text-secondary)",
+              fontWeight: activeSection === "#contact" ? 600 : 500,
+              transition: "all 0.2s ease",
+            }}
           >
             Contact Us
           </button>
@@ -208,61 +268,89 @@ export default function Navigation() {
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Backdrop & Drawer */}
       {menuOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "56px",
-            left: 0,
-            right: 0,
-            zIndex: 49,
-            background: "rgba(14, 18, 25, 0.97)",
-            backdropFilter: "blur(20px)",
-            borderBottom: "1px solid var(--border-subtle)",
-            padding: "20px clamp(20px, 4vw, 40px) 28px",
-          }}
-        >
-          <nav aria-label="Mobile navigation">
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "4px" }}>
-              {[...NAV_LINKS, { href: "#contact", label: "Contact Us" }].map((link) => (
-                <li key={link.href}>
-                  <button
-                    onClick={() => handleNavClick(link.href)}
-                    style={{
-                      width: "100%",
-                      textAlign: "left",
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: "12px 0",
-                      fontSize: "16px",
-                      fontWeight: 500,
-                      color: "var(--text-secondary)",
-                      borderBottom: "1px solid var(--border-subtle)",
-                      transition: "color 0.15s ease",
-                    }}
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <div style={{ marginTop: "20px" }}>
-              <button
-                className="btn-primary"
-                style={{ width: "100%", justifyContent: "center" }}
-                onClick={() => {
-                  setMenuOpen(false);
-                  window.dispatchEvent(new CustomEvent("open-register-modal"));
-                }}
-              >
-                Register Now
-              </button>
-            </div>
-          </nav>
-        </div>
+        <>
+          <div
+            onClick={() => setMenuOpen(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 48,
+              background: "rgba(0, 0, 0, 0.5)",
+              backdropFilter: "blur(4px)",
+              WebkitBackdropFilter: "blur(4px)",
+            }}
+            aria-hidden="true"
+          />
+          <div
+            style={{
+              position: "fixed",
+              top: scrolled ? "58px" : "66px",
+              left: 0,
+              right: 0,
+              zIndex: 49,
+              background: "var(--surface-overlay)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              borderBottom: "1px solid var(--border-default)",
+              padding: "16px clamp(16px, 4vw, 40px) 24px",
+              boxShadow: "0 16px 36px rgba(0, 0, 0, 0.4)",
+              animation: "fade-in-up 0.25s ease-out",
+            }}
+          >
+            <nav aria-label="Mobile navigation">
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "2px", margin: 0, padding: 0 }}>
+                {[...NAV_LINKS, { href: "#contact", label: "Contact Us" }].map((link) => {
+                  const isActive = activeSection === link.href;
+                  return (
+                    <li key={link.href}>
+                      <button
+                        onClick={() => handleNavClick(link.href)}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          background: isActive ? "rgba(249, 115, 22, 0.12)" : "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: "12px 14px",
+                          borderRadius: "10px",
+                          fontSize: "15px",
+                          fontWeight: isActive ? 700 : 500,
+                          color: isActive ? "var(--action-primary)" : "var(--text-primary)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          transition: "background 0.15s ease, color 0.15s ease",
+                        }}
+                      >
+                        <span>{link.label}</span>
+                        {isActive && (
+                          <span style={{ fontSize: "12px", color: "var(--action-primary)" }}>●</span>
+                        )}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: "1px solid var(--border-subtle)" }}>
+                <button
+                  className="btn-primary"
+                  style={{ width: "100%", justifyContent: "center" }}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    window.dispatchEvent(new CustomEvent("open-register-modal"));
+                  }}
+                >
+                  Register Now
+                </button>
+              </div>
+            </nav>
+          </div>
+        </>
       )}
     </>
   );
 }
+
+

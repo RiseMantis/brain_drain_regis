@@ -65,6 +65,7 @@ export default function ContactSection() {
           {/* Registration CTA */}
           <div
             id="register"
+            className="reveal-on-scroll"
             style={{
               background: "linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(59,130,246,0.08) 100%)",
               border: "1px solid rgba(249,115,22,0.25)",
@@ -127,6 +128,7 @@ export default function ContactSection() {
 
         {/* Contact info + social */}
         <div
+          className="reveal-on-scroll"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",

@@ -44,7 +44,7 @@ export default function AboutSection() {
           }}
         >
           {/* Left: copy */}
-          <div>
+          <div className="reveal-on-scroll">
             <p className="eyebrow" style={{ marginBottom: "12px" }}>
               🌀 About the Event
             </p>
@@ -103,13 +103,14 @@ export default function AboutSection() {
 
           {/* Right: pillars */}
           <div
+            className="about-pillars-grid"
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
               gap: "16px",
             }}
           >
-            {PILLARS.map((pillar) => (
+            {PILLARS.map((pillar, idx) => (
               <div
                 key={pillar.title}
                 style={{
@@ -117,9 +118,10 @@ export default function AboutSection() {
                   border: "1px solid var(--border-subtle)",
                   borderRadius: "16px",
                   padding: "20px",
-                  transition: "border-color 0.2s ease, transform 0.2s ease",
+                  transition: "border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+                  transitionDelay: `${idx * 90}ms`,
                 }}
-                className="round-card"
+                className="round-card reveal-on-scroll"
               >
                 <span
                   style={{ fontSize: "28px", display: "block", marginBottom: "10px" }}

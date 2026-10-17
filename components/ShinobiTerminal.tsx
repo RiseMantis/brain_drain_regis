@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const INITIAL_LOGS = [
   "SYSTEM_INIT: Brain Drain v2.6 Shinobi Kernel loaded.",
@@ -12,13 +12,17 @@ const INITIAL_LOGS = [
 export default function ShinobiTerminal() {
   const [logs, setLogs] = useState<string[]>(INITIAL_LOGS);
   const [inputVal, setInputVal] = useState("");
+  const logsEndRef = useRef<HTMLDivElement>(null);
 
-  const handleCommand = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cmd = inputVal.trim().toLowerCase();
+  useEffect(() => {
+    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [logs]);
+
+  const processCommand = (rawCmd: string) => {
+    const cmd = rawCmd.trim().toLowerCase();
     if (!cmd) return;
 
-    const newLogs = [...logs, `> ${inputVal}`];
+    const newLogs = [...logs, `> ${rawCmd}`];
 
     switch (cmd) {
       case "help":
@@ -64,6 +68,11 @@ export default function ShinobiTerminal() {
     setInputVal("");
   };
 
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault();
+    processCommand(inputVal);
+  };
+
   return (
     <section
       id="terminal"
@@ -74,7 +83,7 @@ export default function ShinobiTerminal() {
       }}
     >
       <div style={{ maxWidth: "980px", margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "36px" }}>
+        <div style={{ textAlign: "center", marginBottom: "36px" }} className="reveal-on-scroll">
           <span className="chip chip-blue" style={{ marginBottom: "10px" }}>
             ⚡ Interactive Gauntlet Console
           </span>
@@ -89,6 +98,7 @@ export default function ShinobiTerminal() {
 
         {/* Terminal Window */}
         <div
+          className="reveal-on-scroll"
           style={{
             background: "#080c12",
             border: "1px solid rgba(56, 189, 248, 0.25)",
@@ -150,6 +160,54 @@ export default function ShinobiTerminal() {
               >
                 {log}
               </div>
+            ))}
+            <div ref={logsEndRef} />
+          </div>
+
+          {/* Quick Jutsu Command Shortcuts */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "8px 18px",
+              background: "#0a0f18",
+              borderTop: "1px solid rgba(255, 255, 255, 0.05)",
+              flexWrap: "wrap",
+            }}
+          >
+            <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700 }}>
+              Quick Jutsu:
+            </span>
+            {["help", "test", "rounds", "prizes", "rules", "clear"].map((cmd) => (
+              <button
+                key={cmd}
+                type="button"
+                onClick={() => processCommand(cmd)}
+                style={{
+                  background: "rgba(56, 189, 248, 0.08)",
+                  border: "1px solid rgba(56, 189, 248, 0.2)",
+                  color: "#93c5fd",
+                  borderRadius: "6px",
+                  padding: "2px 8px",
+                  fontSize: "11px",
+                  cursor: "pointer",
+                  fontFamily: "monospace",
+                  transition: "all 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(249, 115, 22, 0.15)";
+                  e.currentTarget.style.borderColor = "rgba(249, 115, 22, 0.4)";
+                  e.currentTarget.style.color = "#fb923c";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(56, 189, 248, 0.08)";
+                  e.currentTarget.style.borderColor = "rgba(56, 189, 248, 0.2)";
+                  e.currentTarget.style.color = "#93c5fd";
+                }}
+              >
+                ${cmd}
+              </button>
             ))}
           </div>
 

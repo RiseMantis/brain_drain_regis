@@ -30,7 +30,7 @@ export default function InfoBanner() {
       }}
     >
       <div
-        className="info-banner-box"
+        className="info-banner-box reveal-on-scroll"
         style={{
           maxWidth: "1040px",
           margin: "0 auto",

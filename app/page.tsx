@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import ScrollFeatures from "@/components/ScrollFeatures";
 import HeroSection from "@/components/HeroSection";
 import InfoBanner from "@/components/InfoBanner";
 import AboutSection from "@/components/AboutSection";
@@ -14,6 +15,9 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      {/* Scroll-driven progress and teleport jutsu widget */}
+      <ScrollFeatures />
+
       {/* Persistent navigation */}
       <Navigation />
 

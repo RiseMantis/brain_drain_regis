@@ -42,9 +42,9 @@ export default function RulesFAQSection() {
       }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "clamp(40px, 6vw, 80px)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(40px, 6vw, 80px)" }}>
           {/* Left Column: Heading and Context */}
-          <div>
+          <div className="reveal-on-scroll">
             <p className="eyebrow" style={{ marginBottom: "12px" }}>
               📜 Shinobi Scroll
             </p>
@@ -66,6 +66,7 @@ export default function RulesFAQSection() {
 
             {/* Quick Rules Checklist */}
             <div
+              className="round-card"
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--border-subtle)",
@@ -105,7 +106,7 @@ export default function RulesFAQSection() {
           </div>
 
           {/* Right Column: Interactive Accordion */}
-          <div>
+          <div className="reveal-on-scroll" style={{ transitionDelay: "150ms" }}>
             <p className="eyebrow" style={{ marginBottom: "12px" }}>
               ❓ Frequently Asked Questions
             </p>

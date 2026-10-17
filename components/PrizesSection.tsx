@@ -48,7 +48,7 @@ export default function PrizesSection() {
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "56px" }}>
+        <div style={{ textAlign: "center", marginBottom: "56px" }} className="reveal-on-scroll">
           <p className="eyebrow" style={{ marginBottom: "12px" }}>
             🏆 Rewards
           </p>
@@ -76,19 +76,19 @@ export default function PrizesSection() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "20px",
+            gap: "24px",
             alignItems: "start",
           }}
         >
-          {PRIZES.map((prize) => (
+          {PRIZES.map((prize, idx) => (
             <div
               key={prize.id}
               id={`prize-${prize.id}`}
-              className="prize-card"
+              className={`prize-card ${prize.featured ? "prize-card-featured" : ""} reveal-on-scroll`}
               style={{
                 position: "relative",
                 overflow: "visible",
-                transform: prize.featured ? "scale(1.03)" : "none",
+                transitionDelay: `${idx * 120}ms`,
               }}
             >
               {/* Featured badge */}

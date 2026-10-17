@@ -64,7 +64,7 @@ export default function RoundsSection() {
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Section header */}
-        <div style={{ marginBottom: "56px", maxWidth: "560px" }}>
+        <div style={{ marginBottom: "56px", maxWidth: "560px" }} className="reveal-on-scroll">
           <p className="eyebrow" style={{ marginBottom: "12px" }}>
             ⚔️ The Challenge
           </p>
@@ -95,8 +95,13 @@ export default function RoundsSection() {
             gap: "20px",
           }}
         >
-          {ROUNDS.map((round) => (
-            <article key={round.id} className="round-card" id={`round-${round.id}`}>
+          {ROUNDS.map((round, index) => (
+            <article
+              key={round.id}
+              className="round-card reveal-on-scroll"
+              id={`round-${round.id}`}
+              style={{ transitionDelay: `${index * 120}ms` }}
+            >
               {/* Number + chip */}
               <div
                 style={{

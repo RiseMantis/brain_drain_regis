@@ -623,3 +623,98 @@ body {
 .input-field::placeholder {
   color: var(--text-muted);
 }
+
+/* ══ EXCITING SCROLL FEATURES & POLISH ══ */
+
+/* ── Scroll Reveal Animations ── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ── Gallery Responsive Spans ── */
+.gallery-span-wide {
+  grid-column: span 2;
+}
+.gallery-span-tall {
+  grid-row: span 2;
+}
+
+@media (max-width: 768px) {
+  .gallery-span-wide {
+    grid-column: span 1 !important;
+  }
+  .gallery-span-tall {
+    grid-row: span 1 !important;
+  }
+}
+
+/* ── Featured Prize Card Polish ── */
+.prize-card-featured {
+  border-color: var(--action-primary) !important;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.3), 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .prize-card-featured {
+    transform: none !important;
+  }
+}
+
+/* ── Teleport Jutsu (Scroll to Top) & Interactive Buttons ── */
+.teleport-jutsu-btn:hover {
+  transform: scale(1.08) !important;
+  border-color: var(--action-primary) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.35) !important;
+}
+.teleport-jutsu-btn:hover svg {
+  transform: translateY(-2px);
+  color: var(--action-primary);
+}
+
+.hero-scroll-btn:hover {
+  color: var(--action-primary) !important;
+}
+.hero-scroll-btn:hover div {
+  border-color: var(--action-primary) !important;
+}
+
+/* ── Text Selection Glow ── */
+::selection {
+  background: rgba(249, 115, 22, 0.28);
+  color: var(--text-primary);
+}
+
+/* ── Mobile Layout Fine-Tuning ── */
+@media (max-width: 640px) {
+  .text-hero {
+    font-size: clamp(40px, 11.5vw, 68px) !important;
+    line-height: 0.94 !important;
+  }
+  .about-pillars-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .round-card {
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-pillars-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
