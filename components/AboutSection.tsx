@@ -1,7 +1,5 @@
 "use client";
 
-import FireVisualEffect from "./FireVisualEffect";
-
 const PILLARS = [
   {
     icon: "⚡",
@@ -37,9 +35,6 @@ export default function AboutSection() {
         overflow: "hidden",
       }}
     >
-      {/* 3D Visual Motion Fire Effect Background */}
-      <FireVisualEffect intensity="normal" showBeam={true} />
-
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Two-column layout */}
         <div

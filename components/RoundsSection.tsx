@@ -1,7 +1,5 @@
 "use client";
 
-import FireVisualEffect from "./FireVisualEffect";
-
 const ROUNDS = [
   {
     id: "code-battle",
@@ -66,9 +64,6 @@ export default function RoundsSection() {
         overflow: "hidden",
       }}
     >
-      {/* 3D Visual Motion Fire Effect Background */}
-      <FireVisualEffect intensity="high" showBeam={true} />
-
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Section header */}
         <div style={{ marginBottom: "56px", maxWidth: "560px" }} className="reveal-on-scroll">

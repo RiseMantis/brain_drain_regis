@@ -77,6 +77,7 @@ export default function ShinobiTerminal() {
     <section
       id="terminal"
       aria-label="Shinobi Terminal"
+      className="shinobi-terminal-section"
       style={{
         background: "var(--page-bg-secondary)",
         padding: "clamp(48px, 7vw, 96px) clamp(20px, 5vw, 80px)",
@@ -98,7 +99,7 @@ export default function ShinobiTerminal() {
 
         {/* Terminal Window */}
         <div
-          className="reveal-on-scroll"
+          className="reveal-on-scroll shinobi-terminal-window"
           style={{
             background: "#080c12",
             border: "1px solid rgba(56, 189, 248, 0.25)",
@@ -110,6 +111,7 @@ export default function ShinobiTerminal() {
         >
           {/* Terminal Titlebar */}
           <div
+            className="shinobi-terminal-titlebar"
             style={{
               padding: "12px 18px",
               background: "#111824",
@@ -119,21 +121,22 @@ export default function ShinobiTerminal() {
               justifyContent: "space-between",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className="shinobi-terminal-meta" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
-              <span style={{ marginLeft: "12px", fontSize: "12px", color: "#94a3b8", fontWeight: 600 }}>
+              <span className="shinobi-terminal-hostname" style={{ marginLeft: "12px", fontSize: "12px", color: "#94a3b8", fontWeight: 600 }}>
                 brain_drain@ieee-cs-spit:~$ (chakra-sh)
               </span>
             </div>
-            <span style={{ fontSize: "11px", color: "#38bdf8", letterSpacing: "0.05em" }}>
+            <span className="shinobi-terminal-live" style={{ fontSize: "11px", color: "#38bdf8", letterSpacing: "0.05em" }}>
               ● LIVE
             </span>
           </div>
 
           {/* Terminal Body */}
           <div
+            className="shinobi-terminal-output"
             style={{
               padding: "20px",
               minHeight: "220px",
@@ -166,6 +169,7 @@ export default function ShinobiTerminal() {
 
           {/* Quick Jutsu Command Shortcuts */}
           <div
+            className="shinobi-terminal-shortcuts"
             style={{
               display: "flex",
               alignItems: "center",
@@ -184,6 +188,7 @@ export default function ShinobiTerminal() {
                 key={cmd}
                 type="button"
                 onClick={() => processCommand(cmd)}
+                className="shinobi-terminal-shortcut"
                 style={{
                   background: "rgba(56, 189, 248, 0.08)",
                   border: "1px solid rgba(56, 189, 248, 0.2)",
@@ -214,6 +219,7 @@ export default function ShinobiTerminal() {
           {/* Terminal Input Form */}
           <form
             onSubmit={handleCommand}
+            className="shinobi-terminal-form"
             style={{
               display: "flex",
               alignItems: "center",
@@ -230,6 +236,7 @@ export default function ShinobiTerminal() {
               placeholder="Type command ('help', 'test', 'rounds', 'clear')..."
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
+              className="shinobi-terminal-input"
               style={{
                 flex: 1,
                 background: "transparent",
@@ -242,6 +249,7 @@ export default function ShinobiTerminal() {
             />
             <button
               type="submit"
+              className="shinobi-terminal-submit"
               style={{
                 background: "rgba(249, 115, 22, 0.2)",
                 border: "1px solid rgba(249, 115, 22, 0.4)",

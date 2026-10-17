@@ -1,7 +1,5 @@
 "use client";
 
-import FireVisualEffect from "./FireVisualEffect";
-
 const PRIZES = [
   {
     id: "first",
@@ -50,9 +48,6 @@ export default function PrizesSection() {
         overflow: "hidden",
       }}
     >
-      {/* 3D Visual Motion Fire Effect Background */}
-      <FireVisualEffect intensity="high" showBeam={true} />
-
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "56px" }} className="reveal-on-scroll">
