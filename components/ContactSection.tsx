@@ -67,8 +67,8 @@ export default function ContactSection() {
             id="register"
             className="reveal-on-scroll"
             style={{
-              background: "linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(59,130,246,0.08) 100%)",
-              border: "1px solid rgba(249,115,22,0.25)",
+              background: "linear-gradient(135deg, rgba(249, 109, 46, 0.12) 0%, rgba(74, 147, 203, 0.08) 100%)",
+              border: "1px solid rgba(249, 109, 46, 0.25)",
               borderRadius: "24px",
               padding: "clamp(36px, 5vw, 64px)",
               textAlign: "center",

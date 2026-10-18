@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 export default function ScrollFeatures() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [isTeleporting, setIsTeleporting] = useState(false);
+  const teleportTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // ── 1. Scroll Progress & Scroll-to-Top visibility ──
@@ -16,6 +19,12 @@ export default function ScrollFeatures() {
         setScrollProgress(progress);
       }
       setShowScrollTop(window.scrollY > 320);
+
+      // If we've reached near the top, reset teleporting state
+      if (window.scrollY < 10 && isTeleporting) {
+        setIsTeleporting(false);
+        if (teleportTimerRef.current) clearTimeout(teleportTimerRef.current);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -29,7 +38,6 @@ export default function ScrollFeatures() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-revealed");
-            // Unobserve once revealed so it remains visible
             observer.unobserve(entry.target);
           }
         });
@@ -52,14 +60,23 @@ export default function ScrollFeatures() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       observer.disconnect();
+      if (teleportTimerRef.current) clearTimeout(teleportTimerRef.current);
     };
-  }, []);
+  }, [isTeleporting]);
 
   const scrollToTop = () => {
+    if (isTeleporting) return;
+    setIsTeleporting(true);
+    setHovered(false);
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+
+    teleportTimerRef.current = setTimeout(() => {
+      setIsTeleporting(false);
+    }, 2350);
   };
 
   // SVG circular progress parameters
@@ -87,8 +104,8 @@ export default function ScrollFeatures() {
           style={{
             height: "100%",
             width: `${scrollProgress}%`,
-            background: "linear-gradient(90deg, #ea580c 0%, #f97316 45%, #38bdf8 100%)",
-            boxShadow: "0 0 12px rgba(249, 115, 22, 0.8), 0 0 24px rgba(56, 189, 248, 0.6)",
+            background: "var(--gradient-naruto)",
+            boxShadow: "0 0 12px rgba(249, 109, 46, 0.8), 0 0 24px rgba(112, 174, 219, 0.6)",
             transition: "width 0.1s linear",
             position: "relative",
           }}
@@ -104,8 +121,8 @@ export default function ScrollFeatures() {
                 width: "9px",
                 height: "9px",
                 borderRadius: "50%",
-                background: "#38bdf8",
-                boxShadow: "0 0 8px #38bdf8, 0 0 16px #38bdf8",
+                background: "var(--color-secondary-400)",
+                boxShadow: "0 0 8px var(--color-secondary-400), 0 0 16px var(--color-secondary-400)",
               }}
             />
           )}
@@ -119,9 +136,9 @@ export default function ScrollFeatures() {
           bottom: "clamp(20px, 4vw, 36px)",
           right: "clamp(20px, 4vw, 36px)",
           zIndex: 48,
-          opacity: showScrollTop ? 1 : 0,
-          transform: showScrollTop ? "scale(1) translateY(0)" : "scale(0.8) translateY(16px)",
-          pointerEvents: showScrollTop ? "auto" : "none",
+          opacity: showScrollTop || isTeleporting ? 1 : 0,
+          transform: showScrollTop || isTeleporting ? "scale(1) translateY(0)" : "scale(0.8) translateY(16px)",
+          pointerEvents: showScrollTop && !isTeleporting ? "auto" : "none",
           transition: "opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
@@ -144,98 +161,130 @@ export default function ScrollFeatures() {
             color: "var(--action-primary)",
             whiteSpace: "nowrap",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
-            opacity: hovered ? 1 : 0,
+            opacity: hovered && !isTeleporting ? 1 : 0,
             pointerEvents: "none",
             transition: "opacity 0.15s ease",
           }}
         >
-          ⚡ Teleport to Top
+          ⚡ Flying Raijin Teleport
         </div>
 
         <button
           onClick={scrollToTop}
-          onMouseEnter={() => setHovered(true)}
+          onMouseEnter={() => !isTeleporting && setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          aria-label="Scroll back to top"
+          disabled={isTeleporting}
+          aria-label={isTeleporting ? "Flying Raijin Teleporting..." : "Scroll back to top"}
+          className={`teleport-jutsu-btn ${isTeleporting ? "teleporting" : ""}`}
           style={{
             width: "50px",
             height: "50px",
             borderRadius: "50%",
-            background: "var(--surface-overlay)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: "1px solid var(--surface-overlay-border)",
-            cursor: "pointer",
+            background: isTeleporting ? "transparent" : "var(--surface-overlay)",
+            backdropFilter: isTeleporting ? "none" : "blur(12px)",
+            WebkitBackdropFilter: isTeleporting ? "none" : "blur(12px)",
+            border: isTeleporting ? "none" : "1px solid var(--surface-overlay-border)",
+            cursor: isTeleporting ? "default" : "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 10px 28px rgba(0, 0, 0, 0.35), 0 0 16px rgba(249, 115, 22, 0.2)",
+            boxShadow: isTeleporting
+              ? "none"
+              : "0 10px 28px rgba(0, 0, 0, 0.35), 0 0 16px rgba(249, 109, 46, 0.2)",
             position: "relative",
             color: "var(--text-primary)",
             padding: 0,
             outline: "none",
             transition: "transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease",
           }}
-          className="teleport-jutsu-btn"
         >
-          {/* Circular Progress Ring */}
-          <svg
-            width="50"
-            height="50"
-            viewBox="0 0 50 50"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              transform: "rotate(-90deg)",
-              pointerEvents: "none",
-            }}
-          >
-            {/* Background ring */}
-            <circle
-              cx="25"
-              cy="25"
-              r={circleRadius}
-              fill="none"
-              stroke="var(--border-subtle)"
-              strokeWidth="2.5"
-            />
-            {/* Active progress ring */}
-            <circle
-              cx="25"
-              cy="25"
-              r={circleRadius}
-              fill="none"
-              stroke="var(--action-primary)"
-              strokeWidth="2.5"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-              style={{
-                transition: "stroke-dashoffset 0.1s linear",
-              }}
-            />
-          </svg>
+          {isTeleporting ? (
+            <div className="raijin-flying-container">
+              {/* Lightning Chakra Trail */}
+              <div className="raijin-lightning-trail" />
+              {/* Expanding launch shockwave ring */}
+              <div className="raijin-launch-burst" />
+              {/* Raijin Kunai */}
+              <div className="raijin-kunai-sprite">
+                <Image
+                  src="/raijin.png"
+                  alt="Flying Raijin"
+                  width={82}
+                  height={32}
+                  priority
+                  style={{
+                    width: "78px",
+                    height: "auto",
+                    transform: "rotate(-90deg)",
+                    display: "block",
+                    filter: "drop-shadow(0 0 10px #facc15) drop-shadow(0 0 20px #f97316) drop-shadow(0 0 32px #e8e41a)",
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Circular Progress Ring */}
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  transform: "rotate(-90deg)",
+                  pointerEvents: "none",
+                }}
+              >
+                {/* Background ring */}
+                <circle
+                  cx="25"
+                  cy="25"
+                  r={circleRadius}
+                  fill="none"
+                  stroke="var(--border-subtle)"
+                  strokeWidth="2.5"
+                />
+                {/* Active progress ring */}
+                <circle
+                  cx="25"
+                  cy="25"
+                  r={circleRadius}
+                  fill="none"
+                  stroke="var(--action-primary)"
+                  strokeWidth="2.5"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  style={{
+                    transition: "stroke-dashoffset 0.1s linear",
+                  }}
+                />
+              </svg>
 
-          {/* Kunai / Arrow Up Icon */}
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{
-              position: "relative",
-              zIndex: 1,
-              transition: "transform 0.2s ease",
-            }}
-          >
-            <line x1="12" y1="19" x2="12" y2="5" />
-            <polyline points="5 12 12 5 19 12" />
-          </svg>
+              {/* Kunai / Arrow Up Icon */}
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  position: "relative",
+                  zIndex: 1,
+                  transition: "transform 0.2s ease",
+                }}
+              >
+                <line x1="12" y1="19" x2="12" y2="5" />
+                <polyline points="5 12 12 5 19 12" />
+              </svg>
+            </>
+          )}
         </button>
       </div>
     </>

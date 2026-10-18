@@ -102,7 +102,7 @@ export default function InfoBanner() {
             style={{ display: "flex", flexDirection: "row", flexShrink: 0 }}
             aria-hidden="true"
           >
-            {["#f97316", "#3b82f6", "#a855f7", "#22c55e"].map((color, i) => (
+            {["var(--color-primary-500)", "var(--color-secondary-500)", "var(--color-sasuke-indigo)", "var(--color-kakashi-green)"].map((color, i) => (
               <div
                 key={i}
                 style={{

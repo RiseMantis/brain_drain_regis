@@ -20,8 +20,8 @@ const PRIZES = [
     subtitle: "Elite Jonin",
     perks: ["Cash Prize", "Certificate of Merit", "IEEE-CS Recognition"],
     featured: false,
-    accentColor: "#94a3b8",
-    chipClass: "chip",
+    accentColor: "var(--color-secondary-400)",
+    chipClass: "chip-blue",
   },
   {
     id: "third",
@@ -31,7 +31,7 @@ const PRIZES = [
     subtitle: "Rising Chunin",
     perks: ["Cash Prize", "Certificate of Participation", "IEEE-CS Recognition"],
     featured: false,
-    accentColor: "#b45309",
+    accentColor: "var(--color-accent-400)",
     chipClass: "chip",
   },
 ];
@@ -105,7 +105,7 @@ export default function PrizesSection() {
                     zIndex: 2,
                   }}
                 >
-                  <span className="chip chip-orange" style={{ fontSize: "10px", boxShadow: "0 0 12px rgba(249, 115, 22, 0.6)" }}>
+                  <span className="chip chip-orange" style={{ fontSize: "10px", boxShadow: "0 0 12px rgba(249, 109, 46, 0.6)" }}>
                     ⭐ Grand Prize
                   </span>
                 </div>
@@ -116,10 +116,10 @@ export default function PrizesSection() {
                 style={{
                   height: "4px",
                   background: prize.featured
-                    ? "linear-gradient(90deg, #ea580c 0%, #f97316 40%, #ef4444 100%)"
+                    ? "var(--gradient-naruto)"
                     : prize.accentColor,
                   boxShadow: prize.featured
-                    ? "0 0 16px rgba(249, 115, 22, 0.9)"
+                    ? "0 0 16px rgba(249, 109, 46, 0.9)"
                     : "none",
                   width: "100%",
                 }}

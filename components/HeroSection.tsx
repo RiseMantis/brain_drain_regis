@@ -3,75 +3,75 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-function ChakraRoute() {
-  return (
-    <svg
-      viewBox="0 0 280 320"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="chakra-route-svg"
-      style={{
-        position: "absolute",
-        right: "5%",
-        top: "15%",
-        width: "280px",
-        height: "320px",
-        pointerEvents: "none",
-        zIndex: 5,
-      }}
-      aria-hidden="true"
-    >
-      {/* Main path */}
-      <path
-        d="M240 20 C200 40, 160 60, 140 100 C120 140, 130 180, 100 220 C75 255, 50 280, 20 300"
-        stroke="#38bdf8"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeDasharray="6 4"
-        className="animate-chakra"
-        opacity="0.75"
-      />
-      {/* Secondary branch */}
-      <path
-        d="M140 100 C170 110, 195 130, 210 160"
-        stroke="#38bdf8"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        strokeDasharray="4 5"
-        opacity="0.4"
-      />
-      {/* Nodes */}
-      {[
-        { cx: 240, cy: 20, delay: "0s" },
-        { cx: 160, cy: 70, delay: "0.4s" },
-        { cx: 140, cy: 100, delay: "0.8s" },
-        { cx: 100, cy: 175, delay: "1.2s" },
-        { cx: 50, cy: 250, delay: "1.6s" },
-      ].map((node, i) => (
-        <g key={i}>
-          {/* Glow */}
-          <circle
-            cx={node.cx}
-            cy={node.cy}
-            r="8"
-            fill="rgba(56,189,248,0.15)"
-          />
-          {/* Outer ring */}
-          <circle
-            cx={node.cx}
-            cy={node.cy}
-            r="5"
-            stroke="#172554"
-            strokeWidth="2"
-            fill="#38bdf8"
-            className="animate-node"
-            style={{ animationDelay: node.delay }}
-          />
-        </g>
-      ))}
-    </svg>
-  );
-}
+// function ChakraRoute() {
+//   return (
+//     <svg
+//       viewBox="0 0 280 320"
+//       fill="none"
+//       xmlns="http://www.w3.org/2000/svg"
+//       className="chakra-route-svg"
+//       style={{
+//         position: "absolute",
+//         right: "5%",
+//         top: "15%",
+//         width: "280px",
+//         height: "320px",
+//         pointerEvents: "none",
+//         zIndex: 5,
+//       }}
+//       aria-hidden="true"
+//     >
+//       {/* Main path */}
+//       <path
+//         d="M240 20 C200 40, 160 60, 140 100 C120 140, 130 180, 100 220 C75 255, 50 280, 20 300"
+//         stroke="#38bdf8"
+//         strokeWidth="1.8"
+//         strokeLinecap="round"
+//         strokeDasharray="6 4"
+//         className="animate-chakra"
+//         opacity="0.75"
+//       />
+//       {/* Secondary branch */}
+//       <path
+//         d="M140 100 C170 110, 195 130, 210 160"
+//         stroke="#38bdf8"
+//         strokeWidth="1.2"
+//         strokeLinecap="round"
+//         strokeDasharray="4 5"
+//         opacity="0.4"
+//       />
+//       {/* Nodes */}
+//       {[
+//         { cx: 240, cy: 20, delay: "0s" },
+//         { cx: 160, cy: 70, delay: "0.4s" },
+//         { cx: 140, cy: 100, delay: "0.8s" },
+//         { cx: 100, cy: 175, delay: "1.2s" },
+//         { cx: 50, cy: 250, delay: "1.6s" },
+//       ].map((node, i) => (
+//         <g key={i}>
+//           {/* Glow */}
+//           <circle
+//             cx={node.cx}
+//             cy={node.cy}
+//             r="8"
+//             fill="rgba(56,189,248,0.15)"
+//           />
+//           {/* Outer ring */}
+//           <circle
+//             cx={node.cx}
+//             cy={node.cy}
+//             r="5"
+//             stroke="#172554"
+//             strokeWidth="2"
+//             fill="#38bdf8"
+//             className="animate-node"
+//             style={{ animationDelay: node.delay }}
+//           />
+//         </g>
+//       ))}
+//     </svg>
+//   );
+// }
 
 function MissionCard() {
   return (
@@ -360,7 +360,7 @@ export default function HeroSection() {
             transition: "transform 0.05s linear",
           }}
         >
-          <ChakraRoute />
+          {/* <ChakraRoute /> */}
           <MissionCard />
         </div>
       </div>

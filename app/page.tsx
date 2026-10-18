@@ -12,6 +12,7 @@ import PrizesSection from "@/components/PrizesSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FireBackgroundVideo from "@/components/FireBackgroundVideo";
+import FloatingAkatsukiClouds from "@/components/FloatingAkatsukiClouds";
 
 export default function Home() {
   return (
@@ -23,7 +24,10 @@ export default function Home() {
       <Navigation />
 
       {/* Main content */}
-      <main id="main-content">
+      <main id="main-content" style={{ position: "relative" }}>
+        {/* Floating atmospheric Akatsuki clouds */}
+        <FloatingAkatsukiClouds />
+
         {/* Hero — Full-bleed cinematic landing */}
         <HeroSection />
 

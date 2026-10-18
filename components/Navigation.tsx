@@ -204,7 +204,7 @@ export default function Navigation() {
                 className={`nav-link ${isActive ? "active" : ""}`}
                 onClick={() => handleNavClick(link.href)}
                 style={{
-                  background: isActive ? "rgba(249, 115, 22, 0.12)" : "none",
+                  background: isActive ? "rgba(249, 109, 46, 0.15)" : "none",
                   border: "none",
                   cursor: "pointer",
                   padding: "6px 12px",
@@ -244,7 +244,7 @@ export default function Navigation() {
             className={`desktop-nav nav-link ${activeSection === "#contact" ? "active" : ""}`}
             onClick={() => handleNavClick("#contact")}
             style={{
-              background: activeSection === "#contact" ? "rgba(249, 115, 22, 0.12)" : "none",
+              background: activeSection === "#contact" ? "rgba(249, 109, 46, 0.15)" : "none",
               border: "none",
               cursor: "pointer",
               padding: "6px 14px",
@@ -310,7 +310,7 @@ export default function Navigation() {
                         style={{
                           width: "100%",
                           textAlign: "left",
-                          background: isActive ? "rgba(249, 115, 22, 0.12)" : "none",
+                          background: isActive ? "rgba(249, 109, 46, 0.15)" : "none",
                           border: "none",
                           cursor: "pointer",
                           padding: "12px 14px",

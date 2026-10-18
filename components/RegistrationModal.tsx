@@ -238,7 +238,7 @@ export default function RegistrationModal({ isOpen, onClose }: RegistrationModal
                 width: "64px",
                 height: "64px",
                 borderRadius: "50%",
-                background: "rgba(249, 115, 22, 0.15)",
+                background: "rgba(249, 109, 46, 0.15)",
                 border: "2px solid var(--action-primary)",
                 display: "flex",
                 alignItems: "center",

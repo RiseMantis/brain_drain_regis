@@ -121,8 +121,8 @@ export default function RoundsSection() {
                   className="font-display"
                   style={{
                     fontSize: "42px",
-                    color: "rgba(249, 115, 22, 0.4)",
-                    textShadow: "0 0 16px rgba(239, 68, 68, 0.25)",
+                    color: "rgba(249, 109, 46, 0.4)",
+                    textShadow: "0 0 16px rgba(200, 16, 46, 0.25)",
                     lineHeight: 1,
                   }}
                 >
@@ -137,14 +137,14 @@ export default function RoundsSection() {
                   width: "52px",
                   height: "52px",
                   borderRadius: "14px",
-                  background: "linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(249, 115, 22, 0.2))",
+                  background: "linear-gradient(135deg, rgba(200, 16, 46, 0.15), rgba(249, 109, 46, 0.2))",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   color: "var(--action-primary)",
                   marginBottom: "18px",
-                  border: "1px solid rgba(249, 115, 22, 0.35)",
-                  boxShadow: "0 0 16px rgba(239, 68, 68, 0.22)",
+                  border: "1px solid rgba(249, 109, 46, 0.35)",
+                  boxShadow: "0 0 16px rgba(200, 16, 46, 0.22)",
                 }}
               >
                 {round.icon}
