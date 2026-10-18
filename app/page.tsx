@@ -11,6 +11,7 @@ import GallerySection from "@/components/GallerySection";
 import PrizesSection from "@/components/PrizesSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import FireBackgroundVideo from "@/components/FireBackgroundVideo";
 
 export default function Home() {
   return (
@@ -30,17 +31,7 @@ export default function Home() {
         <InfoBanner />
 
         <div className="fire-background">
-          <video
-            className="fire-background-video"
-            src="/fire-motion.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            tabIndex={-1}
-          />
+          <FireBackgroundVideo />
           <div className="fire-background-content">
             {/* About — Event identity and pillars */}
             <AboutSection />
