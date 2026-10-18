@@ -117,6 +117,46 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.fire-background {
+  position: relative;
+  isolation: isolate;
+}
+
+.fire-background-video {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  margin-bottom: -100vh;
+  margin-bottom: -100dvh;
+  object-fit: cover;
+  opacity: 0.48;
+  filter: brightness(0.55) saturate(0.85);
+  pointer-events: none;
+}
+
+.fire-background::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: rgba(14, 18, 25, 0.55);
+  content: "";
+  pointer-events: none;
+}
+
+.fire-background-content {
+  position: relative;
+  z-index: 2;
+}
+
+.fire-background-content > section,
+.fire-background-content > footer {
+  background: transparent !important;
+}
+
 /* ── Focus ── */
 :focus-visible {
   outline: 2px solid var(--focus-ring);
