@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 function ChakraRoute() {
@@ -198,6 +199,25 @@ function MissionCard() {
 }
 
 export default function HeroSection() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < window.innerHeight * 1.5) {
+        setScrollY(window.scrollY);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollDown = () => {
+    const target = document.getElementById("info-banner") || document.getElementById("about");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       id="hero"
@@ -211,8 +231,17 @@ export default function HeroSection() {
         overflow: "hidden",
       }}
     >
-      {/* Background image */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+      {/* Background image with subtle parallax depth */}
+      <div
+        style={{
+          position: "absolute",
+          inset: "-5% 0 -5% 0",
+          zIndex: 0,
+          transform: `translate3d(0, ${scrollY * 0.25}px, 0)`,
+          willChange: "transform",
+          transition: "transform 0.05s linear",
+        }}
+      >
         <Image
           src="/hero-bg.jpg"
           alt="Cinematic shinobi landscape at sunset"
@@ -239,7 +268,7 @@ export default function HeroSection() {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          paddingTop: "clamp(80px, 11vh, 120px)",
+          paddingTop: "clamp(84px, 12vh, 128px)",
           paddingLeft: "clamp(20px, 5vw, 80px)",
           paddingRight: "clamp(20px, 5vw, 80px)",
           paddingBottom: "clamp(120px, 18vh, 180px)",
@@ -249,7 +278,7 @@ export default function HeroSection() {
         }}
       >
         {/* Left hero content */}
-        <div style={{ maxWidth: "520px" }}>
+        <div style={{ maxWidth: "540px" }}>
           {/* Eyebrow */}
           <p
             className="eyebrow animate-fade-in-up"
@@ -323,37 +352,78 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Decorative chakra route + floating card (responsive) */}
-        <div className="hero-right-col">
+        {/* Decorative chakra route + floating card (responsive with subtle counter-parallax) */}
+        <div
+          className="hero-right-col"
+          style={{
+            transform: `translate3d(0, ${scrollY * -0.08}px, 0)`,
+            transition: "transform 0.05s linear",
+          }}
+        >
           <ChakraRoute />
           <MissionCard />
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        aria-hidden="true"
+      {/* Interactive Shinobi Scroll Indicator */}
+      <button
+        onClick={handleScrollDown}
+        className="hero-scroll-btn"
+        aria-label="Scroll down to explore"
         style={{
           position: "absolute",
-          bottom: "160px",
+          bottom: "clamp(24px, 5vh, 48px)",
           left: "clamp(20px, 5vw, 80px)",
           zIndex: 3,
           display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: "6px",
-          opacity: 0.5,
+          alignItems: "center",
+          gap: "12px",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: "8px 0",
+          color: "var(--text-muted)",
+          opacity: Math.max(0, 1 - scrollY / 220),
+          transform: `translate3d(0, ${Math.min(20, scrollY * 0.2)}px, 0)`,
+          transition: "opacity 0.2s ease, transform 0.2s ease",
         }}
       >
         <div
           style={{
-            width: "1.5px",
-            height: "40px",
-            background: "linear-gradient(to bottom, transparent, var(--text-muted))",
-            borderRadius: "1px",
+            width: "22px",
+            height: "36px",
+            borderRadius: "12px",
+            border: "1.5px solid var(--border-default)",
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "6px",
+            background: "rgba(0, 0, 0, 0.2)",
+            backdropFilter: "blur(4px)",
           }}
-        />
-      </div>
+        >
+          <div
+            style={{
+              width: "4px",
+              height: "7px",
+              borderRadius: "2px",
+              background: "var(--action-primary)",
+              boxShadow: "0 0 8px var(--action-primary)",
+              animation: "float-card 1.6s ease-in-out infinite",
+            }}
+          />
+        </div>
+        <span
+          style={{
+            fontSize: "11px",
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "var(--text-muted)",
+          }}
+        >
+          Scroll to Explore
+        </span>
+      </button>
     </section>
   );
 }

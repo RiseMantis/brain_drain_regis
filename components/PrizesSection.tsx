@@ -42,14 +42,16 @@ export default function PrizesSection() {
       id="prizes"
       aria-label="Prizes and Rewards"
       style={{
+        position: "relative",
         background: "var(--page-bg-secondary)",
         padding: "clamp(64px, 9vw, 120px) clamp(20px, 5vw, 80px)",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <p className="eyebrow" style={{ marginBottom: "12px" }}>
+        <div style={{ textAlign: "center", marginBottom: "56px" }} className="reveal-on-scroll">
+          <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)" }}>
             🏆 Rewards
           </p>
           <h2 className="section-heading">
@@ -76,19 +78,20 @@ export default function PrizesSection() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "20px",
+            gap: "24px",
             alignItems: "start",
           }}
         >
-          {PRIZES.map((prize) => (
+          {PRIZES.map((prize, idx) => (
             <div
               key={prize.id}
               id={`prize-${prize.id}`}
-              className="prize-card"
+              className={`prize-card fire-tab ${prize.featured ? "prize-card-featured" : ""} reveal-on-scroll`}
               style={{
                 position: "relative",
                 overflow: "visible",
-                transform: prize.featured ? "scale(1.03)" : "none",
+                borderRadius: "20px",
+                transitionDelay: `${idx * 120}ms`,
               }}
             >
               {/* Featured badge */}
@@ -102,7 +105,7 @@ export default function PrizesSection() {
                     zIndex: 2,
                   }}
                 >
-                  <span className="chip chip-orange" style={{ fontSize: "10px" }}>
+                  <span className="chip chip-orange" style={{ fontSize: "10px", boxShadow: "0 0 12px rgba(249, 115, 22, 0.6)" }}>
                     ⭐ Grand Prize
                   </span>
                 </div>
@@ -112,7 +115,12 @@ export default function PrizesSection() {
               <div
                 style={{
                   height: "4px",
-                  background: prize.accentColor,
+                  background: prize.featured
+                    ? "linear-gradient(90deg, #ea580c 0%, #f97316 40%, #ef4444 100%)"
+                    : prize.accentColor,
+                  boxShadow: prize.featured
+                    ? "0 0 16px rgba(249, 115, 22, 0.9)"
+                    : "none",
                   width: "100%",
                 }}
               />

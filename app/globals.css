@@ -623,3 +623,361 @@ body {
 .input-field::placeholder {
   color: var(--text-muted);
 }
+
+/* ══ EXCITING SCROLL FEATURES & POLISH ══ */
+
+/* ── Scroll Reveal Animations ── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.shinobi-terminal-window {
+  position: relative;
+  isolation: isolate;
+  animation: shinobi-terminal-glow 2.4s ease-in-out infinite;
+}
+
+.shinobi-terminal-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.2), rgba(249, 115, 22, 0.06) 45%, transparent 72%);
+  opacity: 0.75;
+  animation: shinobi-terminal-aura 2.6s ease-in-out infinite;
+}
+
+.shinobi-terminal-window::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 3px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #38bdf8 25%, #f97316 50%, #38bdf8 75%, transparent);
+  background-size: 250% 100%;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9)) drop-shadow(0 0 12px rgba(249, 115, 22, 0.55));
+  animation: shinobi-terminal-scan 2.2s linear infinite;
+}
+
+.shinobi-terminal-window > * {
+  position: relative;
+  z-index: 1;
+}
+
+.shinobi-terminal-live {
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.9), 0 0 18px rgba(56, 189, 248, 0.65);
+  animation: shinobi-terminal-live-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes shinobi-terminal-glow {
+  0%, 100% {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 28px rgba(56, 189, 248, 0.22), 0 0 12px rgba(249, 115, 22, 0.12);
+    border-color: rgba(56, 189, 248, 0.45);
+  }
+  50% {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 48px rgba(56, 189, 248, 0.42), 0 0 28px rgba(249, 115, 22, 0.28);
+    border-color: rgba(56, 189, 248, 0.85);
+  }
+}
+
+@keyframes shinobi-terminal-aura {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes shinobi-terminal-scan {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@keyframes shinobi-terminal-live-pulse {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .shinobi-terminal-section {
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+  }
+
+  .shinobi-terminal-window {
+    border-radius: 14px !important;
+  }
+
+  .shinobi-terminal-titlebar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px !important;
+  }
+
+  .shinobi-terminal-meta {
+    flex: 1 1 0;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 6px !important;
+  }
+
+  .shinobi-terminal-hostname {
+    flex: 1 0 100%;
+    margin: 3px 0 0 !important;
+    overflow-wrap: anywhere;
+    font-size: 11px !important;
+  }
+
+  .shinobi-terminal-live {
+    flex: 0 0 auto;
+  }
+
+  .shinobi-terminal-output {
+    min-height: 190px !important;
+    padding: 14px !important;
+    font-size: 12px !important;
+    overflow-wrap: anywhere;
+  }
+
+  .shinobi-terminal-shortcuts {
+    gap: 6px !important;
+    padding: 10px 12px !important;
+  }
+
+  .shinobi-terminal-shortcut {
+    min-height: 32px;
+    padding: 4px 9px !important;
+  }
+
+  .shinobi-terminal-form {
+    gap: 8px;
+    padding: 10px 12px !important;
+  }
+
+  .shinobi-terminal-input {
+    min-width: 0;
+    font-size: 16px !important;
+  }
+
+  .shinobi-terminal-submit {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 6px 10px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .shinobi-terminal-titlebar {
+    padding: 9px 10px !important;
+  }
+
+  .shinobi-terminal-shortcuts > span {
+    flex-basis: 100%;
+  }
+
+  .shinobi-terminal-submit {
+    font-size: 10px !important;
+  }
+}
+
+/* ── Gallery Responsive Spans ── */
+.gallery-span-wide {
+  grid-column: span 2;
+}
+.gallery-span-tall {
+  grid-row: span 2;
+}
+
+@media (max-width: 768px) {
+  .gallery-span-wide {
+    grid-column: span 1 !important;
+  }
+  .gallery-span-tall {
+    grid-row: span 1 !important;
+  }
+}
+
+/* ── Featured Prize Card Polish ── */
+.prize-card-featured {
+  border-color: var(--action-primary) !important;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.3), 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .prize-card-featured {
+    transform: none !important;
+  }
+}
+
+/* ── Teleport Jutsu (Scroll to Top) & Interactive Buttons ── */
+.teleport-jutsu-btn:hover {
+  transform: scale(1.08) !important;
+  border-color: var(--action-primary) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.35) !important;
+}
+.teleport-jutsu-btn:hover svg {
+  transform: translateY(-2px);
+  color: var(--action-primary);
+}
+
+.hero-scroll-btn:hover {
+  color: var(--action-primary) !important;
+}
+.hero-scroll-btn:hover div {
+  border-color: var(--action-primary) !important;
+}
+
+/* ── Text Selection Glow ── */
+::selection {
+  background: rgba(249, 115, 22, 0.28);
+  color: var(--text-primary);
+}
+
+/* ── Mobile Layout Fine-Tuning ── */
+@media (max-width: 640px) {
+  .text-hero {
+    font-size: clamp(40px, 11.5vw, 68px) !important;
+    line-height: 0.94 !important;
+  }
+  .about-pillars-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .round-card {
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-pillars-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══ FLASHING ORANGE + RED TABS (PROFESSIONAL SHINOBI FLAME) ══ */
+.fire-tab,
+.round-card,
+.prize-card {
+  position: relative;
+  background: linear-gradient(155deg, rgba(25, 29, 36, 0.92) 0%, rgba(32, 22, 22, 0.92) 100%) !important;
+  border: 1px solid rgba(249, 115, 22, 0.28) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(239, 68, 68, 0.05);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Ambient Flashing Red+Orange Background Aura */
+.fire-tab::before,
+.round-card::before,
+.prize-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.16) 0%, rgba(239, 68, 68, 0.12) 45%, transparent 75%);
+  opacity: 0.65;
+  animation: fire-tab-flash 3.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Pulsing Fiery Border Top Highlight */
+.fire-tab::after,
+.round-card::after,
+.prize-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, #ef4444 30%, #f97316 50%, #ef4444 70%, transparent 100%);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.8), 0 0 20px rgba(239, 68, 68, 0.6);
+  animation: fire-border-glow 2.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure card children sit above background effect */
+.fire-tab > *,
+.round-card > *,
+.prize-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover Flashing Burst & Fiery Strike */
+.fire-tab:hover,
+.round-card:hover,
+.prize-card:hover {
+  border-color: rgba(249, 115, 22, 0.75) !important;
+  transform: translateY(-5px) scale(1.015) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.5),
+              0 0 28px rgba(239, 68, 68, 0.38),
+              0 0 14px rgba(249, 115, 22, 0.45) !important;
+}
+
+.fire-tab:hover::before,
+.round-card:hover::before,
+.prize-card:hover::before {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 10%, rgba(251, 146, 60, 0.28) 0%, rgba(239, 68, 68, 0.22) 50%, transparent 80%);
+  animation: fire-hover-burst 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes fire-tab-flash {
+  0%, 100% {
+    opacity: 0.45;
+    filter: brightness(0.95);
+  }
+  50% {
+    opacity: 0.9;
+    filter: brightness(1.35) drop-shadow(0 0 14px rgba(239, 68, 68, 0.35));
+  }
+}
+
+@keyframes fire-border-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scaleX(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.05);
+  }
+}
+
+@keyframes fire-hover-burst {
+  0% { filter: brightness(1.1); }
+  100% { filter: brightness(1.5) drop-shadow(0 0 16px rgba(249, 115, 22, 0.45)); }
+}
+
+/* Light Theme Adaptation */
+[data-theme="light"] .fire-tab,
+[data-theme="light"] .round-card,
+[data-theme="light"] .prize-card {
+  background: linear-gradient(155deg, rgba(255, 252, 247, 0.95) 0%, rgba(254, 242, 237, 0.95) 100%) !important;
+  border-color: rgba(234, 88, 12, 0.25) !important;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .fire-tab:hover,
+[data-theme="light"] .round-card:hover,
+[data-theme="light"] .prize-card:hover {
+  border-color: rgba(234, 88, 12, 0.6) !important;
+  box-shadow: 0 14px 32px rgba(234, 88, 12, 0.18), 0 0 20px rgba(239, 68, 68, 0.15) !important;
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const INITIAL_LOGS = [
   "SYSTEM_INIT: Brain Drain v2.6 Shinobi Kernel loaded.",
@@ -12,13 +12,17 @@ const INITIAL_LOGS = [
 export default function ShinobiTerminal() {
   const [logs, setLogs] = useState<string[]>(INITIAL_LOGS);
   const [inputVal, setInputVal] = useState("");
+  const logsEndRef = useRef<HTMLDivElement>(null);
 
-  const handleCommand = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cmd = inputVal.trim().toLowerCase();
+  useEffect(() => {
+    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [logs]);
+
+  const processCommand = (rawCmd: string) => {
+    const cmd = rawCmd.trim().toLowerCase();
     if (!cmd) return;
 
-    const newLogs = [...logs, `> ${inputVal}`];
+    const newLogs = [...logs, `> ${rawCmd}`];
 
     switch (cmd) {
       case "help":
@@ -64,17 +68,23 @@ export default function ShinobiTerminal() {
     setInputVal("");
   };
 
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault();
+    processCommand(inputVal);
+  };
+
   return (
     <section
       id="terminal"
       aria-label="Shinobi Terminal"
+      className="shinobi-terminal-section"
       style={{
         background: "var(--page-bg-secondary)",
         padding: "clamp(48px, 7vw, 96px) clamp(20px, 5vw, 80px)",
       }}
     >
       <div style={{ maxWidth: "980px", margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "36px" }}>
+        <div style={{ textAlign: "center", marginBottom: "36px" }} className="reveal-on-scroll">
           <span className="chip chip-blue" style={{ marginBottom: "10px" }}>
             ⚡ Interactive Gauntlet Console
           </span>
@@ -89,6 +99,7 @@ export default function ShinobiTerminal() {
 
         {/* Terminal Window */}
         <div
+          className="reveal-on-scroll shinobi-terminal-window"
           style={{
             background: "#080c12",
             border: "1px solid rgba(56, 189, 248, 0.25)",
@@ -100,6 +111,7 @@ export default function ShinobiTerminal() {
         >
           {/* Terminal Titlebar */}
           <div
+            className="shinobi-terminal-titlebar"
             style={{
               padding: "12px 18px",
               background: "#111824",
@@ -109,21 +121,22 @@ export default function ShinobiTerminal() {
               justifyContent: "space-between",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className="shinobi-terminal-meta" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
-              <span style={{ marginLeft: "12px", fontSize: "12px", color: "#94a3b8", fontWeight: 600 }}>
+              <span className="shinobi-terminal-hostname" style={{ marginLeft: "12px", fontSize: "12px", color: "#94a3b8", fontWeight: 600 }}>
                 brain_drain@ieee-cs-spit:~$ (chakra-sh)
               </span>
             </div>
-            <span style={{ fontSize: "11px", color: "#38bdf8", letterSpacing: "0.05em" }}>
+            <span className="shinobi-terminal-live" style={{ fontSize: "11px", color: "#38bdf8", letterSpacing: "0.05em" }}>
               ● LIVE
             </span>
           </div>
 
           {/* Terminal Body */}
           <div
+            className="shinobi-terminal-output"
             style={{
               padding: "20px",
               minHeight: "220px",
@@ -151,11 +164,62 @@ export default function ShinobiTerminal() {
                 {log}
               </div>
             ))}
+            <div ref={logsEndRef} />
+          </div>
+
+          {/* Quick Jutsu Command Shortcuts */}
+          <div
+            className="shinobi-terminal-shortcuts"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "8px 18px",
+              background: "#0a0f18",
+              borderTop: "1px solid rgba(255, 255, 255, 0.05)",
+              flexWrap: "wrap",
+            }}
+          >
+            <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700 }}>
+              Quick Jutsu:
+            </span>
+            {["help", "test", "rounds", "prizes", "rules", "clear"].map((cmd) => (
+              <button
+                key={cmd}
+                type="button"
+                onClick={() => processCommand(cmd)}
+                className="shinobi-terminal-shortcut"
+                style={{
+                  background: "rgba(56, 189, 248, 0.08)",
+                  border: "1px solid rgba(56, 189, 248, 0.2)",
+                  color: "#93c5fd",
+                  borderRadius: "6px",
+                  padding: "2px 8px",
+                  fontSize: "11px",
+                  cursor: "pointer",
+                  fontFamily: "monospace",
+                  transition: "all 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(249, 115, 22, 0.15)";
+                  e.currentTarget.style.borderColor = "rgba(249, 115, 22, 0.4)";
+                  e.currentTarget.style.color = "#fb923c";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(56, 189, 248, 0.08)";
+                  e.currentTarget.style.borderColor = "rgba(56, 189, 248, 0.2)";
+                  e.currentTarget.style.color = "#93c5fd";
+                }}
+              >
+                ${cmd}
+              </button>
+            ))}
           </div>
 
           {/* Terminal Input Form */}
           <form
             onSubmit={handleCommand}
+            className="shinobi-terminal-form"
             style={{
               display: "flex",
               alignItems: "center",
@@ -172,6 +236,7 @@ export default function ShinobiTerminal() {
               placeholder="Type command ('help', 'test', 'rounds', 'clear')..."
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
+              className="shinobi-terminal-input"
               style={{
                 flex: 1,
                 background: "transparent",
@@ -184,6 +249,7 @@ export default function ShinobiTerminal() {
             />
             <button
               type="submit"
+              className="shinobi-terminal-submit"
               style={{
                 background: "rgba(249, 115, 22, 0.2)",
                 border: "1px solid rgba(249, 115, 22, 0.4)",

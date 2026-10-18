@@ -80,13 +80,12 @@ export default function GallerySection() {
             <div
               key={item.id}
               id={item.id}
-              className="gallery-item"
+              className={`gallery-item ${item.span === "wide" ? "gallery-span-wide" : ""} ${item.span === "tall" ? "gallery-span-tall" : ""} reveal-on-scroll`}
               style={{
-                gridColumn: item.span === "wide" ? "span 2" : "span 1",
-                gridRow: item.span === "tall" ? "span 2" : "span 1",
                 minHeight: "220px",
                 borderRadius: "16px",
                 border: "1px solid var(--border-subtle)",
+                transitionDelay: `${i * 100}ms`,
               }}
             >
               <Image
