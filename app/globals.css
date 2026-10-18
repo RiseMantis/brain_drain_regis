@@ -364,7 +364,12 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.prize-card-body {
+  flex: 1;
 }
 .prize-card:hover {
   border-color: var(--action-primary);
@@ -854,13 +859,6 @@ body {
 .prize-card-featured {
   border-color: var(--action-primary) !important;
   box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.3), 0 20px 48px rgba(0, 0, 0, 0.32) !important;
-  transform: scale(1.03);
-}
-
-@media (max-width: 768px) {
-  .prize-card-featured {
-    transform: none !important;
-  }
 }
 
 /* ── Teleport Jutsu (Scroll to Top) & Interactive Buttons ── */

@@ -79,7 +79,7 @@ export default function PrizesSection() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "24px",
-            alignItems: "start",
+            alignItems: "stretch",
           }}
         >
           {PRIZES.map((prize, idx) => (
@@ -126,7 +126,7 @@ export default function PrizesSection() {
               />
 
               {/* Card body */}
-              <div style={{ padding: "28px" }}>
+              <div className="prize-card-body" style={{ padding: "28px" }}>
                 {/* Rank icon */}
                 <div style={{ fontSize: "42px", marginBottom: "12px", lineHeight: 1 }}>
                   {prize.rank}
