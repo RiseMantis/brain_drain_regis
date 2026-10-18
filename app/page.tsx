@@ -11,6 +11,7 @@ import GallerySection from "@/components/GallerySection";
 import PrizesSection from "@/components/PrizesSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import FireBackgroundVideo from "@/components/FireBackgroundVideo";
 
 export default function Home() {
   return (
@@ -29,33 +30,37 @@ export default function Home() {
         {/* Information banner — overlaps hero bottom */}
         <InfoBanner />
 
-        {/* About — Event identity and pillars */}
-        <AboutSection />
+        <div className="fire-background">
+          <FireBackgroundVideo />
+          <div className="fire-background-content">
+            {/* About — Event identity and pillars */}
+            <AboutSection />
 
-        {/* Challenge Rounds — three mission cards */}
-        <RoundsSection />
+            {/* Challenge Rounds — three mission cards */}
+            <RoundsSection />
 
-        {/* Interactive Shinobi Terminal / Kernel console */}
-        <ShinobiTerminal />
+            {/* Interactive Shinobi Terminal / Kernel console */}
+            <ShinobiTerminal />
 
-        {/* Schedule — vertical mission timeline */}
-        <ScheduleSection />
+            {/* Schedule — vertical mission timeline */}
+            <ScheduleSection />
 
-        {/* Rules & FAQ — engagement guidelines and accordion */}
-        <RulesFAQSection />
+            {/* Rules & FAQ — engagement guidelines and accordion */}
+            <RulesFAQSection />
 
-        {/* Gallery — cinematic image grid */}
-        <GallerySection />
+            {/* Gallery — cinematic image grid */}
+            <GallerySection />
 
-        {/* Prizes — ranked reward panels */}
-        <PrizesSection />
+            {/* Prizes — ranked reward panels */}
+            <PrizesSection />
 
-        {/* Contact — registration CTA, organizer info, social */}
-        <ContactSection />
+            {/* Contact — registration CTA, organizer info, social */}
+            <ContactSection />
+
+            <Footer />
+          </div>
+        </div>
       </main>
-
-      {/* Footer */}
-      <Footer />
     </>
   );
 }
