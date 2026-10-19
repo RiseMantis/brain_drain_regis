@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
+/* ─── Pillar data (unchanged content) ─────────────────────── */
 const PILLARS = [
   {
     icon: "⚡",
@@ -23,145 +26,197 @@ const PILLARS = [
   },
 ];
 
-export default function AboutSection() {
+/* ─── SVG: decorative Leaf-Village-inspired spiral seal ──────
+   Hand-drawn spiral, not a reproduction of any official logo.  */
+function SpiralSeal() {
   return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 120"
+      xmlns="http://www.w3.org/2000/svg"
+      className="scroll-seal-svg"
+    >
+      {/* Outer ring */}
+      <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.45" />
+      {/* Inner ring */}
+      <circle cx="60" cy="60" r="42" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+      {/* Spiral path — 2.5 turns */}
+      <path
+        d="M60,60
+           m0,-28
+           a28,28 0 1,1 -0.01,0
+           m0,-8
+           a36,36 0 1,1 -0.01,0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+      {/* Centre dot */}
+      <circle cx="60" cy="60" r="4" fill="currentColor" opacity="0.5" />
+      {/* Four-petal diamond marks at cardinal points */}
+      {[0, 90, 180, 270].map((angle) => (
+        <g key={angle} transform={`rotate(${angle} 60 60)`}>
+          <path d="M60,14 L63,20 L60,26 L57,20 Z" fill="currentColor" opacity="0.35" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* ─── Main component ─────────────────────────────────────── */
+export default function AboutSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const hasUnrolled = useRef(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    /* Respect prefers-reduced-motion: open immediately, no animation */
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      section.classList.add("scroll-open");
+      return;
+    }
+
+    /* IntersectionObserver — trigger at ~35 % in view, play only once */
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasUnrolled.current) {
+            hasUnrolled.current = true;
+            section.classList.add("scroll-open");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.35,
+        rootMargin: "0px 0px -60px 0px",
+      }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    /* ── Outer section: acts as the "stage" — no background override needed,
+          the fire-background-content rule already makes it transparent.      */
     <section
       id="about"
+      ref={sectionRef}
       aria-label="About Brain Drain"
-      style={{
-        position: "relative",
-        background: "var(--page-bg-secondary)",
-        padding: "clamp(64px, 9vw, 120px) clamp(20px, 5vw, 80px)",
-        overflow: "hidden",
-      }}
+      className="shinobi-scroll-section"
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-        {/* Two-column layout */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "clamp(40px, 6vw, 80px)",
-            alignItems: "center",
-          }}
-        >
-          {/* Left: copy */}
-          <div className="reveal-on-scroll">
-            <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)" }}>
-              🌀 About the Event
-            </p>
-            <h2 className="section-heading" style={{ marginBottom: "20px" }}>
-              What Is{" "}
-              <span style={{ color: "var(--action-primary)" }}>Brain Drain?</span>
-            </h2>
-            <p
-              style={{
-                fontSize: "15px",
-                color: "var(--text-secondary)",
-                lineHeight: 1.7,
-                marginBottom: "16px",
-              }}
-            >
-              Brain Drain is the annual flagship coding and technology quiz competition
-              organized by <strong style={{ color: "var(--text-primary)" }}>IEEE-CS SPIT</strong> — the
-              IEEE Computer Society student chapter at Sardar Patel Institute of Technology, Mumbai.
-            </p>
-            <p
-              style={{
-                fontSize: "15px",
-                color: "var(--text-secondary)",
-                lineHeight: 1.7,
-                marginBottom: "24px",
-              }}
-            >
-              Inspired by the shinobi world, participants face multi-round challenges that test
-              algorithmic thinking, technical knowledge, and the ability to adapt on the fly.
-              One event. Three rounds. Unlimited chaos.
-            </p>
+      {/* ── Scroll wrapper — this element animates the full height ── */}
+      <div className="shinobi-scroll-wrapper" aria-hidden="false">
 
-            {/* Mission statement */}
-            <div
-              className="fire-tab"
-              style={{
-                padding: "20px 24px",
-                borderLeft: "3.5px solid #ef4444",
-                borderRadius: "0 16px 16px 0",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "var(--text-primary)",
-                  fontStyle: "italic",
-                  lineHeight: 1.5,
-                }}
-              >
-                &ldquo;A shinobi mission in which participants battle through coding puzzles,
-                technology trivia, and surprising challenges.&rdquo;
-              </p>
+        {/* ── TOP ROD ── */}
+        <div className="scroll-rod scroll-rod-top" aria-hidden="true">
+          <span className="scroll-rod-cap scroll-rod-cap-left" />
+          <span className="scroll-rod-body" />
+          <span className="scroll-rod-cap scroll-rod-cap-right" />
+        </div>
+
+        {/* ── TIE / CORD (visible while closed, fades out as it opens) ── */}
+        <div className="scroll-tie" aria-hidden="true">
+          <span className="scroll-tie-horizontal" />
+          <span className="scroll-tie-bow scroll-tie-bow-left" />
+          <span className="scroll-tie-bow scroll-tie-bow-right" />
+        </div>
+
+        {/* ── PARCHMENT BODY — clips content during roll ── */}
+        <div className="scroll-parchment">
+          {/* SVG noise texture layer (feTurbulence paper grain) */}
+          <svg aria-hidden="true" className="scroll-noise-svg" xmlns="http://www.w3.org/2000/svg">
+            <filter id="scroll-paper-noise" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.65 0.72"
+                numOctaves="4"
+                seed="8"
+                stitchTiles="stitch"
+              />
+              <feColorMatrix type="saturate" values="0" />
+              <feComposite in2="SourceGraphic" operator="multiply" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#scroll-paper-noise)" opacity="0.18" />
+          </svg>
+
+          {/* Parchment vignette / edge darkening overlay */}
+          <div className="scroll-vignette" aria-hidden="true" />
+
+          {/* Faint ink-brush border frame */}
+          <div className="scroll-border-frame" aria-hidden="true" />
+
+          {/* Decorative seal (centre watermark) */}
+          <div className="scroll-seal" aria-hidden="true">
+            <SpiralSeal />
+          </div>
+
+          {/* ── Actual content — fades in after parchment opens ── */}
+          <div className="scroll-content-inner">
+
+            {/* Two-column layout — matches original structure */}
+            <div className="scroll-content-grid">
+
+              {/* Left: copy */}
+              <div className="scroll-content-left scroll-fade-child" style={{ "--child-delay": "0ms" } as React.CSSProperties}>
+                <p className="eyebrow scroll-eyebrow" style={{ marginBottom: "12px" }}>
+                  🌀 About the Event
+                </p>
+                <h2 className="section-heading scroll-heading" style={{ marginBottom: "20px" }}>
+                  What Is{" "}
+                  <span className="scroll-heading-accent">Brain Drain?</span>
+                </h2>
+                <p className="scroll-body-text scroll-fade-child" style={{ marginBottom: "16px", "--child-delay": "80ms" } as React.CSSProperties}>
+                  Brain Drain is the annual flagship coding and technology quiz competition
+                  organized by <strong className="scroll-strong">IEEE-CS SPIT</strong> — the
+                  IEEE Computer Society student chapter at Sardar Patel Institute of Technology, Mumbai.
+                </p>
+                <p className="scroll-body-text scroll-fade-child" style={{ marginBottom: "24px", "--child-delay": "160ms" } as React.CSSProperties}>
+                  Inspired by the shinobi world, participants face multi-round challenges that test
+                  algorithmic thinking, technical knowledge, and the ability to adapt on the fly.
+                  One event. Three rounds. Unlimited chaos.
+                </p>
+
+                {/* Mission statement */}
+                <div className="scroll-mission-tab scroll-fade-child" style={{ "--child-delay": "240ms" } as React.CSSProperties}>
+                  <p className="scroll-mission-text">
+                    &ldquo;A shinobi mission in which participants battle through coding puzzles,
+                    technology trivia, and surprising challenges.&rdquo;
+                  </p>
+                </div>
+              </div>
+
+              {/* Right: pillars */}
+              <div className="about-pillars-grid">
+                {PILLARS.map((pillar, idx) => (
+                  <div
+                    key={pillar.title}
+                    className="scroll-pillar-card scroll-fade-child"
+                    style={{ "--child-delay": `${320 + idx * 90}ms` } as React.CSSProperties}
+                  >
+                    <div className="scroll-pillar-icon" aria-hidden="true">
+                      {pillar.icon}
+                    </div>
+                    <p className="scroll-pillar-title">{pillar.title}</p>
+                    <p className="scroll-pillar-desc">{pillar.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Right: pillars */}
-          <div
-            className="about-pillars-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
-              gap: "16px",
-            }}
-          >
-            {PILLARS.map((pillar, idx) => (
-              <div
-                key={pillar.title}
-                style={{
-                  borderRadius: "18px",
-                  padding: "22px 20px",
-                  transitionDelay: `${idx * 90}ms`,
-                }}
-                className="round-card fire-tab reveal-on-scroll"
-              >
-                <div
-                  style={{
-                    width: "44px",
-                    height: "44px",
-                    borderRadius: "12px",
-                    background: "rgba(249, 115, 22, 0.12)",
-                    border: "1px solid rgba(249, 115, 22, 0.25)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "22px",
-                    marginBottom: "12px",
-                    boxShadow: "0 0 12px rgba(239, 68, 68, 0.2)",
-                  }}
-                  aria-hidden="true"
-                >
-                  {pillar.icon}
-                </div>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    marginBottom: "6px",
-                  }}
-                >
-                  {pillar.title}
-                </p>
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "var(--text-muted)",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {pillar.description}
-                </p>
-              </div>
-            ))}
-          </div>
+        {/* ── BOTTOM ROD ── */}
+        <div className="scroll-rod scroll-rod-bottom" aria-hidden="true">
+          <span className="scroll-rod-cap scroll-rod-cap-left" />
+          <span className="scroll-rod-body" />
+          <span className="scroll-rod-cap scroll-rod-cap-right" />
         </div>
       </div>
     </section>

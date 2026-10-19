@@ -1288,3 +1288,489 @@ body {
 }
 
 
+/* ══════════════════════════════════════════════════════════════
+   SHINOBI SCROLL  —  "About the Event" section
+   ══════════════════════════════════════════════════════════════
+   TWEAK GUIDE (all key values live here as CSS variables):
+   ─ --scroll-anim-duration   : total unroll time (default 1.5s)
+   ─ --scroll-anim-ease       : easing curve for the unroll
+   ─ --scroll-parchment-bg    : main parchment colour
+   ─ --scroll-rod-colour      : wood tone of the rods
+   ─ --scroll-cap-colour      : metallic end-cap colour
+   ─ --scroll-tie-colour      : cord / tie colour
+   ─ --scroll-ink             : text / border ink colour
+   ─ --scroll-trigger-*       : IntersectionObserver threshold
+                                (edit the JS in AboutSection.tsx)
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  /* Animation timing — change these two to slow/speed the effect */
+  --scroll-anim-duration: 1.5s;
+  --scroll-anim-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Parchment palette */
+  --scroll-parchment-bg:    #f2e8d0;
+  --scroll-parchment-mid:   #ecdcb8;
+  --scroll-parchment-edge:  #c8a96e;
+  --scroll-ink:             #2b1f10;
+  --scroll-ink-faint:       rgba(43, 31, 16, 0.45);
+
+  /* Scroll rods */
+  --scroll-rod-colour:      #5a2d0c;
+  --scroll-rod-highlight:   #8b4a1e;
+  --scroll-rod-shadow:      #2e1505;
+  --scroll-cap-colour:      #c8a02e;
+  --scroll-cap-shine:       #f0d06a;
+  --scroll-rod-height:      clamp(22px, 3.2vw, 38px);
+  --scroll-cap-width:       clamp(18px, 2.4vw, 30px);
+  --scroll-rod-border-radius: 999px;
+
+  /* Tie / cord */
+  --scroll-tie-colour:      #8b1a2a;
+  --scroll-tie-width:       clamp(4px, 0.8vw, 7px);
+  --scroll-tie-bow-length:  clamp(20px, 4vw, 40px);
+
+  /* Seal watermark */
+  --scroll-seal-colour:     rgba(120, 80, 20, 0.12);
+
+  /* Section padding */
+  --scroll-section-py:      clamp(64px, 9vw, 120px);
+  --scroll-section-px:      clamp(20px, 5vw, 80px);
+}
+
+/* ── Section stage ───────────────────────────────────────────── */
+.shinobi-scroll-section {
+  position: relative;
+  /* Intentionally transparent — fire-background-content handles bg */
+  background: transparent !important;
+  padding: var(--scroll-section-py) var(--scroll-section-px);
+  overflow: visible;   /* rods can extend to edges */
+  /* Reserve the full open height so the page doesn't jump
+     when the parchment expands. We use a min-height that matches
+     the content height; clamp keeps it reasonable on small screens. */
+  min-height: clamp(480px, 65vw, 900px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Wrapper: the "whole scroll object" ─────────────────────── */
+.shinobi-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  /* will-change is intentionally NOT set here — we animate
+     .scroll-parchment and the rods individually */
+}
+
+/* ══ RODS ══════════════════════════════════════════════════════ */
+.scroll-rod {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--scroll-rod-height);
+  position: relative;
+  z-index: 3;
+}
+
+.scroll-rod-body {
+  flex: 1;
+  height: 100%;
+  border-radius: 0;
+  /* Cylindrical 3-D wood shading */
+  background: linear-gradient(
+    to bottom,
+    var(--scroll-rod-highlight) 0%,
+    var(--scroll-rod-colour)    35%,
+    var(--scroll-rod-shadow)    80%,
+    var(--scroll-rod-colour)    100%
+  );
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.15),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-rod-cap {
+  flex-shrink: 0;
+  width: var(--scroll-cap-width);
+  height: calc(var(--scroll-rod-height) * 1.35); /* slightly taller than rod */
+  border-radius: var(--scroll-rod-border-radius);
+  /* Shiny gold metallic cap */
+  background: radial-gradient(
+    ellipse at 35% 25%,
+    var(--scroll-cap-shine) 0%,
+    var(--scroll-cap-colour) 45%,
+    #7a5a10 100%
+  );
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+    0 3px 8px rgba(0, 0, 0, 0.45);
+  align-self: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Top rod sits above parchment, bottom rod sits below */
+.scroll-rod-top {
+  border-radius: var(--scroll-rod-border-radius) var(--scroll-rod-border-radius) 0 0;
+  /* Will be held in place; the parchment grows downward */
+  transform-origin: top center;
+  z-index: 4;
+}
+
+.scroll-rod-bottom {
+  border-radius: 0 0 var(--scroll-rod-border-radius) var(--scroll-rod-border-radius);
+  transform-origin: top center;
+  z-index: 2;
+  /* Closed state: bottom rod sits right below the top rod */
+  transform: translateY(0);
+  transition:
+    transform var(--scroll-anim-duration) var(--scroll-anim-ease);
+  will-change: transform;
+}
+
+/* Open state: bottom rod moves to the bottom of the parchment */
+.scroll-open .scroll-rod-bottom {
+  transform: translateY(0); /* reset — parchment height naturally pushes it */
+}
+
+/* ══ TIE / CORD ════════════════════════════════════════════════ */
+.scroll-tie {
+  position: absolute;
+  /* Centred horizontally over the scroll */
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+  /* Tie is visible when closed, fades away as the scroll opens */
+  opacity: 1;
+  transition: opacity 0.4s ease 0.05s;
+  will-change: opacity;
+}
+
+.scroll-open .scroll-tie {
+  opacity: 0;
+  /* Tie vanishes in the first ~0.4s of the animation */
+  transition: opacity 0.35s ease 0s;
+}
+
+.scroll-tie-horizontal {
+  display: block;
+  width: clamp(40px, 8vw, 80px);
+  height: var(--scroll-tie-width);
+  background: var(--scroll-tie-colour);
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+}
+
+.scroll-tie-bow {
+  display: block;
+  width: var(--scroll-tie-width);
+  height: var(--scroll-tie-bow-length);
+  background: linear-gradient(to bottom, var(--scroll-tie-colour), #5a0e1a);
+  border-radius: 2px;
+  position: absolute;
+  top: 100%;
+}
+.scroll-tie-bow-left  { transform: rotate(-20deg); left:  calc(50% - var(--scroll-tie-bow-length) * 0.45); }
+.scroll-tie-bow-right { transform: rotate( 20deg); right: calc(50% - var(--scroll-tie-bow-length) * 0.45); }
+
+/* ══ PARCHMENT ══════════════════════════════════════════════════ */
+.scroll-parchment {
+  position: relative;
+  overflow: hidden;
+  /* CLOSED STATE: parchment is a thin sliver (height near-zero) */
+  max-height: 0;
+  opacity: 0;
+  /* Animate max-height for the unroll.
+     Large enough value to accommodate any content height. */
+  transition:
+    max-height var(--scroll-anim-duration) var(--scroll-anim-ease),
+    opacity     0.25s ease 0.1s;
+  will-change: max-height, opacity;
+  border-radius: 2px;
+
+  /* Parchment background: warm tan base colour */
+  background-color: #f2e8d0;
+  /* Layered gradient overlays for aged paper texture */
+  background-image:
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(120, 70, 10, 0.18) 100%),
+    repeating-linear-gradient(180deg, transparent 0px, transparent 28px, rgba(160, 100, 30, 0.05) 29px, transparent 30px),
+    linear-gradient(160deg, #f2e8d0 0%, #ecdcb8 45%, #e0cfa0 70%, #f2e8d0 100%);
+}
+
+/* OPEN STATE: full height */
+.scroll-open .scroll-parchment {
+  max-height: 1200px;   /* generous cap; real height is content-driven */
+  opacity: 1;
+  transition:
+    max-height var(--scroll-anim-duration) var(--scroll-anim-ease),
+    opacity     0.2s ease 0s;
+}
+
+/* ── SVG noise filter overlay ───────────────────────────────── */
+.scroll-noise-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* ── Vignette / edge darkening ──────────────────────────────── */
+.scroll-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+  background-image:
+    linear-gradient(to right,  rgba(100, 60, 10, 0.22) 0%, transparent 12%),
+    linear-gradient(to left,   rgba(100, 60, 10, 0.22) 0%, transparent 12%),
+    linear-gradient(to bottom, rgba(80, 50, 8, 0.18) 0%, transparent 10%),
+    linear-gradient(to top,    rgba(80, 50, 8, 0.18) 0%, transparent 10%);
+}
+
+/* ── Ink-brush border frame ─────────────────────────────────── */
+.scroll-border-frame {
+  position: absolute;
+  inset: clamp(10px, 2vw, 20px);
+  border: 2px solid rgba(100, 60, 10, 0.25);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 1;
+  /* Double-line effect with a slightly lighter inner border */
+  box-shadow:
+    inset 0 0 0 4px rgba(100, 60, 10, 0.09),
+    0 0 0 1px rgba(100, 60, 10, 0.12);
+}
+
+/* ── Spiral seal watermark ──────────────────────────────────── */
+.scroll-seal {
+  position: absolute;
+  /* Centred on the parchment, behind all content */
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+.scroll-seal-svg {
+  width: clamp(120px, 20vw, 220px);
+  height: clamp(120px, 20vw, 220px);
+  color: var(--scroll-seal-colour);
+  opacity: 0.6;
+}
+
+/* ══ CONTENT INSIDE PARCHMENT ══════════════════════════════════ */
+.scroll-content-inner {
+  position: relative;
+  z-index: 2;
+  padding: clamp(28px, 5vw, 64px) clamp(24px, 5vw, 64px);
+}
+
+/* Two-column layout (mirrors the original grid) */
+.scroll-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
+}
+
+/* ── Eyebrow label ──────────────────────────────────────────── */
+.scroll-eyebrow {
+  color: var(--scroll-rod-colour) !important;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* ── Section heading — brush font applied only here ────────── */
+.scroll-heading {
+  font-family: "Noto Serif", "Georgia", serif !important;
+  color: var(--scroll-ink) !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.01em;
+}
+.scroll-heading-accent {
+  color: var(--scroll-rod-colour);
+}
+
+/* ── Body text on parchment ─────────────────────────────────── */
+.scroll-body-text {
+  font-size: 15px;
+  color: rgba(43, 31, 16, 0.82);
+  line-height: 1.75;
+}
+.scroll-strong {
+  color: var(--scroll-ink);
+  font-weight: 700;
+}
+
+/* ── Mission statement tab ──────────────────────────────────── */
+.scroll-mission-tab {
+  padding: 18px 22px;
+  border-left: 3.5px solid var(--scroll-rod-colour);
+  border-radius: 0 12px 12px 0;
+  background: rgba(120, 70, 10, 0.07);
+  backdrop-filter: none;
+}
+.scroll-mission-text {
+  font-family: "Noto Serif", "Georgia", serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--scroll-ink);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ── Pillar cards on parchment ──────────────────────────────── */
+.scroll-pillar-card {
+  border-radius: 12px;
+  padding: 18px 16px;
+  background: rgba(120, 70, 10, 0.06);
+  border: 1px solid rgba(120, 70, 10, 0.18);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.scroll-pillar-card:hover {
+  border-color: rgba(120, 70, 10, 0.42);
+  box-shadow: 0 6px 20px rgba(80, 40, 5, 0.15);
+  transform: translateY(-3px);
+}
+.scroll-pillar-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(120, 70, 10, 0.1);
+  border: 1px solid rgba(120, 70, 10, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.scroll-pillar-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--scroll-ink);
+  margin-bottom: 5px;
+}
+.scroll-pillar-desc {
+  font-size: 12.5px;
+  color: rgba(43, 31, 16, 0.7);
+  line-height: 1.5;
+}
+
+/* ══ STAGGERED CONTENT FADE-IN ══════════════════════════════════
+   Children with .scroll-fade-child start invisible and slide up.
+   They only become visible after the parchment is mostly open
+   (delay offsets are set via --child-delay inline CSS var).      */
+.scroll-fade-child {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity  0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* Hold until scroll is open */
+  transition-delay: calc(var(--scroll-anim-duration) * 0.6 + var(--child-delay, 0ms));
+}
+
+.scroll-open .scroll-fade-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Settle / bounce keyframe on the wrapper ────────────────── */
+@keyframes scroll-settle {
+  0%   { transform: scaleY(1); }
+  70%  { transform: scaleY(1.012); }  /* slight over-stretch */
+  85%  { transform: scaleY(0.994); }  /* rebound */
+  100% { transform: scaleY(1); }
+}
+
+.scroll-open .scroll-parchment {
+  /* Settle runs after the main unroll completes */
+  animation: scroll-settle 0.45s ease calc(var(--scroll-anim-duration) * 0.85) both;
+}
+
+/* ══ RESPONSIVENESS ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .scroll-content-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  /* On narrow screens the grid already collapses — pillar columns too */
+  .about-pillars-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-pillars-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .scroll-rod-cap {
+    width: clamp(12px, 4vw, 20px);
+  }
+  .scroll-content-inner {
+    padding: 20px 16px;
+  }
+}
+
+/* ══ ACCESSIBILITY: prefers-reduced-motion ═══════════════════════
+   The IntersectionObserver already adds scroll-open immediately,
+   but we additionally override all transitions to zero here so
+   nothing moves if the OS preference is set.                       */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-parchment,
+  .scroll-rod-bottom,
+  .scroll-tie,
+  .scroll-fade-child {
+    transition-duration: 0.01ms !important;
+    animation-duration:  0.01ms !important;
+    transition-delay:    0ms    !important;
+    animation-delay:     0ms    !important;
+  }
+  /* Ensure content is visible without JS as well */
+  .scroll-parchment {
+    max-height: 1200px !important;
+    opacity: 1 !important;
+  }
+  .scroll-fade-child {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ══ NO-JS / OBSERVER FAILURE FALLBACK ══════════════════════════
+   If IntersectionObserver never fires and scroll-open is never
+   added, we show the scroll fully open after a short CSS timer
+   using the :not(.scroll-open) trick + a long animation-delay.
+   This is a graceful fallback, not the primary path.              */
+.shinobi-scroll-section:not(.scroll-open) .scroll-parchment {
+  animation: scroll-fallback-open 0.01ms linear 4s forwards;
+}
+@keyframes scroll-fallback-open {
+  to {
+    max-height: 1200px;
+    opacity: 1;
+  }
+}
+.shinobi-scroll-section:not(.scroll-open) .scroll-fade-child {
+  animation: scroll-fallback-reveal 0.01ms linear 4.1s forwards;
+}
+@keyframes scroll-fallback-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
