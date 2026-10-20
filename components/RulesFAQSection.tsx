@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
-import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon } from "./NarutoSymbols";
+import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, NarutoCharacterTag, AkatsukiCloud } from "./NarutoSymbols";
 
 const FAQ_ITEMS = [
   {
@@ -11,11 +11,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "What is the team format and size?",
-    a: "Participation is Duo ONLY (strictly teams of 2). You and your partner will register together on Unstop as a duo squad.",
+    a: "You can register either as a Duo (team of 2) or Solo (individual). If you register as a duo, you will compete together as a pair. All participants play individually from their own respective devices via Google Forms.",
   },
   {
-    q: "How does the individual scoring work if we are in a duo?",
-    a: "Both members of the duo play individually from their own respective devices (laptops or phones) via Google Forms. Your individual scores are summed up to determine your duo's standing on the master leaderboard.",
+    q: "How does the individual scoring work if we are in a duo or solo?",
+    a: "Both members in a duo play individually from their own respective devices (laptops or phones) via Google Forms. Your individual scores combine to form your duo's standing. Solo participants compete with their individual score on the master leaderboard.",
   },
   {
     q: "What platform will the quiz be conducted on?",
@@ -23,7 +23,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is it really true that 2nd place gets the biggest prize?",
-    a: "Yes! That is the signature Brain Drain twist. The second-ranked duo on the final leaderboard takes the largest chunk of the ₹4,000+ prize pool.",
+    a: `Yes! That is the signature Brain Drain twist. The second-ranked contender on the final leaderboard takes the largest chunk of the ${EVENT_CONFIG.prizePool} prize pool.`,
   },
   {
     q: "What are the other twists in Brain Drain?",
@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What is the event timing and registration deadline?",
-    a: "Registrations close on 27 October 2026. The full 6-round event takes place on 28 October 2026, starting 5:00 PM onwards at SPIT Mumbai.",
+    a: `Registrations close on ${EVENT_CONFIG.registrationDeadline}. The full 6-round event takes place on ${EVENT_CONFIG.date}, starting 5:00 PM onwards at SPIT Mumbai.`,
   },
 ];
 
@@ -92,7 +92,7 @@ export default function RulesFAQSection() {
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px", padding: 0 }}>
                 {[
                   "Eligibility: Open strictly to First Year Students (FE) only.",
-                  "Team Size: Duo ONLY (Teams of 2). Individual play from your own device.",
+                  "Team Format: Solo or Duo. Individual play from your own device via Google Forms.",
                   "Platform: Google Forms. Bring your laptops or phones with active browsers.",
                   "Prize Twist 1: 2nd place receives the BIGGEST prize!",
                   "Prize Twist 2: A mystery random position winner receives a dedicated prize.",
@@ -117,6 +117,16 @@ export default function RulesFAQSection() {
                   </li>
                 ))}
               </ul>
+
+              {/* Naruto Character Feature */}
+              <div style={{ marginTop: "18px", paddingTop: "14px", borderTop: "1px solid var(--border-subtle)", display: "flex", flexDirection: "column", gap: "8px" }}>
+                <NarutoCharacterTag
+                  name="Gaara (Kazekage)"
+                  role="“Rules are absolute like sand armor, but victory favors those who adapt.”"
+                  emoji="⏳"
+                  accentColor="#f97316"
+                />
+              </div>
             </div>
           </div>
 

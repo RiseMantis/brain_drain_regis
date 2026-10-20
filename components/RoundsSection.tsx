@@ -128,7 +128,7 @@ export default function RoundsSection() {
             }}
           >
             All 6 rounds will be conducted sequentially on <strong>{EVENT_CONFIG.date} starting 5:00 PM Onwards</strong> at SPIT Mumbai.
-            Each participant plays individually on Google Forms from their own device, accumulating points for their duo!
+            Each participant plays individually on Google Forms from their own device, accumulating points on the master leaderboard!
           </p>
         </div>
 

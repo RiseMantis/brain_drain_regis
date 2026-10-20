@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
-import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, UzumakiSpiral } from "./NarutoSymbols";
+import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, UzumakiSpiral, NarutoCharacterTag } from "./NarutoSymbols";
 
 const PILLARS = [
   {
     icon: <KunaiIcon size={24} color="var(--action-primary)" />,
-    title: "Duo Only",
-    description: "Form a 2-ninja squad. Play individually from your own devices via Google Forms to pile up your duo points.",
+    title: "Solo & Duo Play",
+    description: "Participate solo or form a 2-ninja squad. Play individually from your own devices via Google Forms to climb the leaderboard.",
   },
   {
     icon: <UzumakiSpiral size={24} color="var(--color-primary-400)" />,
@@ -187,8 +187,18 @@ export default function AboutSection() {
                 {/* Mission statement */}
                 <div className="scroll-mission-tab scroll-fade-child" style={{ "--child-delay": "240ms" } as React.CSSProperties}>
                   <p className="scroll-mission-text">
-                    &ldquo;Individual play, duo squads, 6 rapid rounds on Google Forms, and unpredictable twists worthy of a shinobi.&rdquo;
+                    &ldquo;Individual play, solo ninjas and duo squads, 6 rapid rounds on Google Forms, and unpredictable twists worthy of a shinobi.&rdquo;
                   </p>
+                </div>
+
+                {/* Shinobi Character Spotlight */}
+                <div style={{ marginTop: "14px" }} className="scroll-fade-child">
+                  <NarutoCharacterTag
+                    name="Jiraiya (Gallant Sage)"
+                    role="“A true ninja is one who endures no matter what logic gets thrown at them!”"
+                    emoji="🐸"
+                    accentColor="var(--action-primary)"
+                  />
                 </div>
               </div>
 

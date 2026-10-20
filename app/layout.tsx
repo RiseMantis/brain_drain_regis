@@ -4,21 +4,21 @@ import { EVENT_CONFIG } from "@/constants/eventConfig";
 
 export const metadata: Metadata = {
   title: `${EVENT_CONFIG.title} — ${EVENT_CONFIG.organizerShort} | Where Logic Meets Chaos!!`,
-  description: `${EVENT_CONFIG.title} is a fun, quiz-based competition organized by ${EVENT_CONFIG.organizerShort}. 6 rounds, duos only, unpredictable twists, and ₹4000+ prize pool on ${EVENT_CONFIG.date}.`,
+  description: `${EVENT_CONFIG.title} is a fun, quiz-based competition organized by ${EVENT_CONFIG.organizerShort}. 6 rounds, solo and duo registration, unpredictable twists, and ${EVENT_CONFIG.prizePool} prize pool on ${EVENT_CONFIG.date}.`,
   keywords: [
     "Brain Drain",
     "IEEE-CS SPIT",
     "quiz competition",
     "logic meets chaos",
     "first year students",
-    "duo competition",
+    "solo or duo competition",
     "coding quiz",
     "SPIT Mumbai",
     "Unstop",
   ],
   openGraph: {
     title: `${EVENT_CONFIG.title} — ${EVENT_CONFIG.organizerShort}`,
-    description: "Where Logic Meets Chaos!! 28 October 2026. Duos only.",
+    description: `Where Logic Meets Chaos!! 28 October 2026. ${EVENT_CONFIG.prizePool} Prize Pool.`,
     type: "website",
   },
 };

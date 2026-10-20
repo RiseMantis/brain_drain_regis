@@ -153,7 +153,7 @@ export default function ScheduleSection() {
               onClick={() => window.dispatchEvent(new CustomEvent("open-register-modal"))}
               style={{ height: "46px", padding: "0 24px" }}
             >
-              Register Duo →
+              Register Now →
             </button>
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function ScheduleSection() {
             </span>
           </div>
           <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>
-            First Year Students (FE) Only · Duo Squads
+            First Year Students (FE) Only · Solo & Duo
           </span>
         </div>
 

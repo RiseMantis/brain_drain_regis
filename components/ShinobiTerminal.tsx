@@ -7,7 +7,7 @@ import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon } from "./NarutoSymbols";
 const INITIAL_LOGS = [
   "SYSTEM_INIT: Brain Drain 2026 Shinobi Kernel loaded.",
   "EVENT NODE: IEEE-CS SPIT (Hidden Leaf Chapter).",
-  "STATUS: 6 Rounds [READY] | Format: Duo Only | Starts 5:00 PM Onwards | FE Only",
+  "STATUS: 6 Rounds [READY] | Format: Solo & Duo | Starts 5:00 PM Onwards | FE Only",
   "Type 'help' for available commands, or 'twists' to inspect the winning rules.",
 ];
 
@@ -36,11 +36,39 @@ export default function ShinobiTerminal() {
         newLogs.push("AVAILABLE SHINOBI COMMANDS:");
         newLogs.push("  rounds     - Breakdown of all 6 rapid quiz & logic rounds");
         newLogs.push("  twists     - Inspect the 3 big rules where logic meets chaos");
-        newLogs.push("  prizes     - View the ₹4,000+ prize pool & 2nd place jackpot");
-        newLogs.push("  rules      - Eligibility, Duo format & Google Forms mechanics");
+        newLogs.push(`  prizes     - View the ${EVENT_CONFIG.prizePool} prize pool & 2nd place jackpot`);
+        newLogs.push("  rules      - Eligibility, Solo & Duo format & Google Forms mechanics");
         newLogs.push("  schedule   - Event date (Starts 5:00 PM Onwards) & 27 Oct deadline");
+        newLogs.push("  characters - Inspect the featured Naruto shinobi mentors");
+        newLogs.push("  jutsu      - Trigger chakra release matrix");
         newLogs.push("  test       - Run diagnostic logic & chakra benchmark");
         newLogs.push("  clear      - Clear terminal logs");
+        break;
+      case "characters":
+        newLogs.push("FEATURED SHINOBI MENTORS & GUARDIANS:");
+        newLogs.push("  🍥 Naruto Uzumaki       - Round 01: NO ESCAPE ROUND (Belief & Willpower)");
+        newLogs.push("  ♟️ Shikamaru Nara       - Round 02: Bug Spotting & 200-IQ Deduction");
+        newLogs.push("  ⚡ Kakashi Hatake       - Round 03: Copy Ninja Tech Trivia Blitz");
+        newLogs.push("  👁️ Sasuke Uchiha        - Round 04: Reverse Logic & Illusion Breaker");
+        newLogs.push("  ⚡ Minato Namikaze      - Round 05: Flying Raijin Speed Coding");
+        newLogs.push("  🔥 Might Guy & Rock Lee - Round 06 & Dare Showdown (Youthful Passion)");
+        newLogs.push("  💎 Tsunade Senju        - 2nd Place Grand Jackpot Patron");
+        newLogs.push("  🪶 Itachi Uchiha        - Secret ANBU Mystery Rank Master");
+        newLogs.push("  🐸 Jiraiya Gallant Sage - Shinobi Philosophy & Wisdom Guardian");
+        newLogs.push("  ⏳ Gaara of the Sand    - Ironclad Rules & Strategic Defense");
+        break;
+      case "jutsu":
+        newLogs.push("CHAKRA CONCENTRATION: 100%");
+        newLogs.push("  ⚡ CHIDORI (1000 Birds)  - Synthesizing logic gates...");
+        newLogs.push("  🌀 RASENGAN              - Rotating algorithmic complexity...");
+        newLogs.push("  🔥 FIRE STYLE: JUTSU     - Burning deceptive trick questions...");
+        newLogs.push("  🌿 WOOD STYLE: DEPLOY    - Brain Drain arena ready on 28 Oct 5:00 PM!");
+        break;
+      case "naruto":
+        newLogs.push("🍥 Naruto Uzumaki says: 'I never go back on my word, that is my nindo, my ninja way! DATTEBAYO!'");
+        break;
+      case "itachi":
+        newLogs.push("🪶 Itachi Uchiha whispers: 'People live their lives bound by what they accept as correct and true... but logic can be an illusion.'");
         break;
       case "rounds":
         newLogs.push("SIX-ROUND MISSION BREAKDOWN (Starts 5:00 PM Onwards):");
@@ -60,7 +88,7 @@ export default function ShinobiTerminal() {
       case "rules":
         newLogs.push("OFFICIAL RULES:");
         newLogs.push("  • Eligibility: Strictly open to First Year Students (FE Only).");
-        newLogs.push("  • Team Size: Duo ONLY (Teams of 2). Individual play from each device.");
+        newLogs.push("  • Team Format: Solo or Duo. Individual play from each device via Google Forms.");
         newLogs.push("  • Platform: Google Forms. Bring your own laptops / phones.");
         newLogs.push("  • Registration: Closes 27 October 2026 on Unstop.");
         break;
@@ -216,7 +244,7 @@ export default function ShinobiTerminal() {
               <ShurikenIcon size={10} color="var(--action-primary)" />
               <span>Quick Jutsu:</span>
             </span>
-            {["help", "twists", "rounds", "prizes", "rules", "schedule", "test", "clear"].map((cmd) => (
+            {["help", "twists", "rounds", "prizes", "rules", "schedule", "characters", "jutsu", "test", "clear"].map((cmd) => (
               <button
                 key={cmd}
                 type="button"

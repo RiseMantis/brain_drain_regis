@@ -130,6 +130,150 @@ export function SharinganIcon({ size = 24, color = "#ef4444", className = "" }: 
   );
 }
 
+/**
+ * Iconic Akatsuki Crimson Cloud with white border outline
+ */
+export function AkatsukiCloud({ size = 28, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={Math.round((size * 22) / 32)}
+      viewBox="0 0 36 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Cloud Outer Stroke (White outline) */}
+      <path
+        d="M9 19 C5 19, 2 16, 2 12.5 C2 9.5, 4.5 7, 7.5 7 C8.2 4 11 2 14.5 2 C18 2, 20.5 4, 21.5 6.5 C23 5, 25 4.5, 27 5.5 C29.5 6.8, 30.5 9.5, 30 12 C32.5 12.5, 34 14.5, 34 17 C34 19.8, 31.8 22, 29 22 L9 22 Z"
+        fill="#b91c1c"
+        stroke="#ffffff"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      {/* Inner cloud swirl line */}
+      <path
+        d="M12 16 C10 16, 8 14.5, 8 12.5 C8 10.5, 10 9, 12.5 9.5 C14 10, 15 11.5, 15 13"
+        stroke="#ffffff"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.8"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Rinnegan Divine Eye (Concentric ripple circles of Nagato / Pain / Madara)
+ */
+export function RinneganIcon({ size = 24, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 36 36"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Pale purple / lavender base */}
+      <circle cx="18" cy="18" r="16" fill="#a78bfa" stroke="#4c1d95" strokeWidth="1.5" />
+      {/* Concentric rings */}
+      <circle cx="18" cy="18" r="12.5" stroke="#4c1d95" strokeWidth="1.2" />
+      <circle cx="18" cy="18" r="9" stroke="#4c1d95" strokeWidth="1.2" />
+      <circle cx="18" cy="18" r="5.5" stroke="#4c1d95" strokeWidth="1.2" />
+      <circle cx="18" cy="18" r="2.2" fill="#2e1065" />
+    </svg>
+  );
+}
+
+/**
+ * Itachi's Pinwheel Mangekyo Sharingan
+ */
+export function MangekyoSharinganIcon({ size = 24, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 36 36"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Blood red background */}
+      <circle cx="18" cy="18" r="15" fill="#dc2626" stroke="#18181b" strokeWidth="2" />
+      {/* Center pupil */}
+      <circle cx="18" cy="18" r="2.8" fill="#18181b" />
+      {/* 3 curved curved curved pinwheel blades */}
+      {[0, 120, 240].map((deg) => (
+        <g key={deg} transform={`rotate(${deg} 18 18)`}>
+          <path
+            d="M18 18 C18 12, 23 8, 25 5 C23 10, 22 14, 18 18 Z"
+            fill="#18181b"
+          />
+          <circle cx="21" cy="9" r="1.8" fill="#18181b" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * Byakugan Lavender Eye (Hyuga Clan / Neji / Hinata)
+ */
+export function ByakuganIcon({ size = 24, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 36 36"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Pearlescent white-lilac sclera */}
+      <circle cx="18" cy="18" r="15" fill="#f5f3ff" stroke="#c4b5fd" strokeWidth="2" />
+      {/* Soft lavender iris */}
+      <circle cx="18" cy="18" r="10" stroke="#8b5cf6" strokeWidth="1.4" fill="#ede9fe" />
+      <circle cx="18" cy="18" r="5" stroke="#7c3aed" strokeWidth="1" strokeDasharray="2 2" />
+      {/* Subtle vein flares */}
+      <line x1="2" y1="18" x2="6" y2="18" stroke="#a78bfa" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="30" y1="18" x2="34" y2="18" stroke="#a78bfa" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="18" y1="2" x2="18" y2="6" stroke="#a78bfa" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="18" y1="30" x2="18" y2="34" stroke="#a78bfa" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/**
+ * Eight Inner Gates Green Chakra Flame (Might Guy & Rock Lee)
+ */
+export function EightGatesFlame({ size = 22, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Green steam/fire aura */}
+      <path
+        d="M16 2 C16 7, 21 10, 21 16 C21 23, 17 28, 16 30 C15 28, 11 23, 11 16 C11 11, 14 6, 16 2 Z"
+        fill="#22c55e"
+        opacity="0.9"
+      />
+      <path
+        d="M16 10 C18 13, 19 16, 19 20 C19 24, 17 27, 16 28 C15 27, 13 24, 13 20 C13 16, 14 13, 16 10 Z"
+        fill="#86efac"
+      />
+      <circle cx="16" cy="22" r="2.5" fill="#ffffff" />
+    </svg>
+  );
+}
+
 export function ShinobiHeadbandPlate({ text = "LEAF VILLAGE", style }: { text?: string; style?: React.CSSProperties }) {
   return (
     <div

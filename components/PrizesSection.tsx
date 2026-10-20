@@ -1,7 +1,7 @@
 "use client";
 
 import { EVENT_CONFIG } from "@/constants/eventConfig";
-import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, UzumakiSpiral } from "./NarutoSymbols";
+import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, UzumakiSpiral, AkatsukiCloud, EightGatesFlame, NarutoCharacterTag } from "./NarutoSymbols";
 
 const PRIZES = [
   {
@@ -11,6 +11,9 @@ const PRIZES = [
     place: "2nd Place",
     amount: "BIGGEST PRIZE",
     subtitle: "The Shinobi Inversion Twist",
+    character: "Tsunade Senju",
+    characterRole: "5th Hokage · Legendary Gambler",
+    characterEmoji: "💎",
     description: "In Brain Drain, 2nd position takes the grandest bounty of the entire competition!",
     perks: ["Largest Cash Share", "Certificate of Merit", "IEEE-CS SPIT Recognition", "Ultimate Shinobi Bragging Rights"],
     featured: true,
@@ -26,7 +29,10 @@ const PRIZES = [
     place: "1st Place",
     amount: "Top Finisher Prize",
     subtitle: "Leaderboard Champion",
-    description: "Honoring the duo that conquered the points table through sheer speed and deduction.",
+    character: "Naruto & Sasuke",
+    characterRole: "Valley of the End Legends",
+    characterEmoji: "⚡",
+    description: "Honoring the top finisher who conquered the points table through sheer speed and deduction.",
     perks: ["Cash Reward", "Certificate of Excellence", "IEEE-CS SPIT Recognition"],
     featured: false,
     accentColor: "var(--color-secondary-400)",
@@ -41,13 +47,16 @@ const PRIZES = [
     place: "Mystery Rank",
     amount: "Random Position Prize",
     subtitle: "Position Revealed Live",
+    character: "Itachi Uchiha",
+    characterRole: "ANBU Shadow Operative",
+    characterEmoji: "🪶",
     description: "No matter where you land, anyone can win! A secret rank revealed at closing wins a cash prize.",
     perks: ["Surprise Cash Reward", "Certificate of Participation", "Lucky Shinobi Honor"],
     featured: false,
     accentColor: "var(--color-accent-400)",
     chipClass: "chip",
     badge: "Chaos Multiplier",
-    symbol: <UzumakiSpiral size={24} color="var(--color-accent-400)" />,
+    symbol: <AkatsukiCloud size={24} />,
   },
   {
     id: "dare",
@@ -56,13 +65,16 @@ const PRIZES = [
     place: "The Dare Showdown",
     amount: "Best Dare Prize",
     subtitle: "Bottom 5 Shinobi Gauntlet",
+    character: "Might Guy & Rock Lee",
+    characterRole: "Gates of Youthful Passion",
+    characterEmoji: "🔥",
     description: "The last 5 contenders must face an entertaining live dare. The best dare execution claims the prize!",
     perks: ["Special Cash Reward", "Crowd Favorite Certificate", "Dare Legend Title"],
     featured: false,
     accentColor: "var(--color-akatsuki-red)",
     chipClass: "chip-orange",
     badge: "Fun & Absurdity",
-    symbol: <ShurikenIcon size={24} color="var(--color-akatsuki-red)" />,
+    symbol: <EightGatesFlame size={24} />,
   },
 ];
 
@@ -204,12 +216,22 @@ export default function PrizesSection() {
                   style={{
                     fontSize: "12px",
                     color: "var(--text-muted)",
-                    marginBottom: "12px",
+                    marginBottom: "10px",
                     fontWeight: 600,
                   }}
                 >
                   {prize.subtitle}
                 </p>
+
+                {/* Character Tag */}
+                <div style={{ marginBottom: "12px" }}>
+                  <NarutoCharacterTag
+                    name={prize.character}
+                    role={prize.characterRole}
+                    emoji={prize.characterEmoji}
+                    accentColor={prize.accentColor}
+                  />
+                </div>
 
                 {/* Description */}
                 <p

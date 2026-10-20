@@ -13,16 +13,16 @@ export const EVENT_CONFIG = {
   time: "5:00 PM Onwards",
   duration: "5:00 PM Onwards",
   registrationDeadline: "27 October 2026",
-  prizePool: "₹4,000+",
+  prizePool: "₹5,000+",
   tagline: "WHERE LOGIC MEETS CHAOS!!",
   description:
-    "Brain Drain is a fun, quiz-based event where participants form duos, compete, and win prizes unpredictably. The game is filled with twists and turns that challenges your logical reasoning — and sometimes, throws it out the window!",
+    "Brain Drain is a fun, quiz-based event where participants register solo or as duos, compete, and win prizes unpredictably. The game is filled with twists and turns that challenges your logical reasoning — and sometimes, throws it out the window!",
   whyParticipate:
     "It's an unpredictable, fun-filled competition where no one can predict the outcome! Enjoy coding, laugh at the absurdities, and win prizes in unexpected ways.",
-  teamSize: "Duo ONLY (Teams of 2)",
+  teamSize: "Solo or Duo (Teams of 1 or 2)",
   eligibility: "Open to First Year Students Only (FE Only)",
   platform: "Google Forms (Bring your laptops / devices)",
-  scoring: "Individual Play: Each participant in the duo plays individually from their own device",
+  scoring: "Individual Play: Each participant plays individually from their own device via Google Forms",
   roundsCount: 6,
   
   /**

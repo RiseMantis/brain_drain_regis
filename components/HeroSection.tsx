@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
-import { ShurikenIcon, KunaiIcon, KonohaLeafSymbol, ShinobiHeadbandPlate } from "./NarutoSymbols";
+import { ShurikenIcon, KunaiIcon, KonohaLeafSymbol, ShinobiHeadbandPlate, NarutoCharacterTag, AkatsukiCloud } from "./NarutoSymbols";
 
 function MissionCard() {
   return (
@@ -29,7 +29,7 @@ function MissionCard() {
             <span>{EVENT_CONFIG.date} · 5:00 PM Onwards</span>
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-            <span className="chip chip-orange">Duos Only (Teams of 2)</span>
+            <span className="chip chip-orange">Solo & Duo Welcome</span>
             <span className="chip chip-blue">6 Rapid Rounds</span>
             <span className="chip chip-green">Prize: {EVENT_CONFIG.prizePool}</span>
           </div>
@@ -264,12 +264,29 @@ export default function HeroSection() {
             style={{
               fontSize: "14px",
               color: "var(--text-secondary)",
-              marginBottom: "24px",
+              marginBottom: "16px",
               lineHeight: 1.6,
             }}
           >
-            A fun, quiz-based shinobi competition where duos form, compete individually on Google Forms, and win prizes unpredictably. 6 rapid rounds starting 5:00 PM onwards!
+            A fun, quiz-based shinobi competition where solo ninjas and duos compete individually on Google Forms, and win prizes unpredictably. 6 rapid rounds starting 5:00 PM onwards!
           </p>
+
+          {/* Naruto Character Featured Quote / Seal */}
+          <div
+            className="animate-fade-in-up delay-300"
+            style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "18px" }}
+          >
+            <NarutoCharacterTag
+              name="Naruto Uzumaki"
+              role="“Believe it! Logic meets pure chaos!”"
+              emoji="🍥"
+              accentColor="var(--action-primary)"
+            />
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", opacity: 0.9 }}>
+              <AkatsukiCloud size={24} />
+              <span style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>S-Rank Proving Grounds</span>
+            </div>
+          </div>
 
           {/* Key Quick Badges */}
           <div
@@ -277,7 +294,7 @@ export default function HeroSection() {
             style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "26px" }}
           >
             <span className="chip chip-orange">🏆 Prize Pool: {EVENT_CONFIG.prizePool}</span>
-            <span className="chip chip-blue">👥 Duo ONLY (Teams of 2)</span>
+            <span className="chip chip-blue">👥 Solo & Duo Welcome</span>
             <span className="chip">🎓 First Years Only</span>
             <span className="chip chip-green">⏱ Starts 5:00 PM Onwards</span>
           </div>

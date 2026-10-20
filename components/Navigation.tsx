@@ -254,7 +254,7 @@ export default function Navigation() {
             }}
           >
             <ShurikenIcon size={12} color="#fff" />
-            <span>Register Duo</span>
+            <span>Register</span>
           </button>
 
           <button
@@ -342,7 +342,7 @@ export default function Navigation() {
                     window.dispatchEvent(new CustomEvent("open-register-modal"));
                   }}
                 >
-                  Register Now (Duo)
+                  Register Now
                 </button>
               </div>
             </nav>

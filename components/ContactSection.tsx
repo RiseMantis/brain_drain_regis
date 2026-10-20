@@ -90,7 +90,7 @@ export default function ContactSection() {
                 lineHeight: 1.6,
               }}
             >
-              Duo registrations only. 6 rapid rounds starting <strong>5:00 PM Onwards</strong>.
+              Solo & Duo registrations open. 6 rapid rounds starting <strong>5:00 PM Onwards</strong>.
               Registrations close on <strong>{EVENT_CONFIG.registrationDeadline}</strong>. 
               Event day: <strong>{EVENT_CONFIG.date}</strong> at SPIT Mumbai.
             </p>
@@ -144,7 +144,7 @@ export default function ContactSection() {
                 onClick={() => setModalOpen(true)}
               >
                 <KunaiIcon size={16} color="var(--action-primary)" rotate={45} />
-                <span>Generate Duo Pass</span>
+                <span>Register (Solo / Duo)</span>
               </button>
               <a
                 href="#faq"

@@ -83,7 +83,7 @@ export default function InfoBanner() {
               lineHeight: 1.3,
             }}
           >
-            Duo Quiz · 6 Rapid Rounds
+            Solo & Duo · 6 Rapid Rounds
           </p>
         </div>
 
