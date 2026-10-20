@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { EVENT_CONFIG } from "@/constants/eventConfig";
+import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon } from "./NarutoSymbols";
 
 const INITIAL_LOGS = [
-  "SYSTEM_INIT: Brain Drain v2.6 Shinobi Kernel loaded.",
-  "CONNECTING: IEEE-CS SPIT secure node established.",
-  "GAUNTLET STATUS: Code Arena [ONLINE] | Tech Quiz [ONLINE] | Chaos Protocol [ACTIVE]",
-  "Type 'help' for available shinobi commands, or 'test' to run algorithmic diagnostics.",
+  "SYSTEM_INIT: Brain Drain 2026 Shinobi Kernel loaded.",
+  "EVENT NODE: IEEE-CS SPIT (Hidden Leaf Chapter).",
+  "STATUS: 6 Rounds [READY] | Format: Duo Only | Starts 5:00 PM Onwards | FE Only",
+  "Type 'help' for available commands, or 'twists' to inspect the winning rules.",
 ];
 
 export default function ShinobiTerminal() {
@@ -31,37 +33,60 @@ export default function ShinobiTerminal() {
 
     switch (cmd) {
       case "help":
-        newLogs.push("AVAILABLE COMMANDS:");
-        newLogs.push("  rounds     - Inspect 01 Arena, 02 Knowledge Jutsu, 03 Chaos");
-        newLogs.push("  rules      - View gauntlet engagement rules");
-        newLogs.push("  prizes     - Display ninja rewards & podium ranking");
-        newLogs.push("  test       - Execute sample algorithm benchmark");
+        newLogs.push("AVAILABLE SHINOBI COMMANDS:");
+        newLogs.push("  rounds     - Breakdown of all 6 rapid quiz & logic rounds");
+        newLogs.push("  twists     - Inspect the 3 big rules where logic meets chaos");
+        newLogs.push("  prizes     - View the ₹4,000+ prize pool & 2nd place jackpot");
+        newLogs.push("  rules      - Eligibility, Duo format & Google Forms mechanics");
+        newLogs.push("  schedule   - Event date (Starts 5:00 PM Onwards) & 27 Oct deadline");
+        newLogs.push("  test       - Run diagnostic logic & chakra benchmark");
         newLogs.push("  clear      - Clear terminal logs");
         break;
       case "rounds":
-        newLogs.push("MISSION BREAKDOWN:");
-        newLogs.push("  [01] The Coding Arena: Hard algorithmic problems under clock pressure.");
-        newLogs.push("  [02] Knowledge Jutsu: CS theory, systems, networking, and AI trivia.");
-        newLogs.push("  [03] Chaos Protocol: Unpredictable dynamic rules and sudden-death challenges.");
+        newLogs.push("SIX-ROUND MISSION BREAKDOWN (Starts 5:00 PM Onwards):");
+        newLogs.push("  [01] NO ESCAPE ROUND: High-intensity opening logic puzzles & reflex trivia (Naruto Uzumaki).");
+        newLogs.push("  [02] Round 02: Bug spotting, output prediction & mini-code tracing (Shikamaru Nara).");
+        newLogs.push("  [03] Round 03: CS concepts, tech trivia & viral tech culture (Kakashi Hatake).");
+        newLogs.push("  [04] Round 04: Reverse logic & lateral thinking brain-twisters (Sasuke Uchiha).");
+        newLogs.push("  [05] Round 05: Rapid-fire speed coding challenges under clock pressure (Minato Namikaze).");
+        newLogs.push("  [06] Round 06: Final decider round unlocking the bottom-5 Dare Gauntlet (Might Guy & Rock Lee)!");
+        break;
+      case "twists":
+        newLogs.push("BRAIN DRAIN TWISTS:");
+        newLogs.push("  1. 🥈 The 2nd position takes the BIGGEST PRIZE of the entire event!");
+        newLogs.push("  2. 🎲 A random position winner (revealed at closing) will also receive a prize.");
+        newLogs.push("  3. 🔥 The last 5 players must complete a live dare; best dare wins a cash prize!");
         break;
       case "rules":
-        newLogs.push("RULES: Solo or squad of up to 3. C++, Java, Python, JS allowed. Fair play strictly enforced.");
+        newLogs.push("OFFICIAL RULES:");
+        newLogs.push("  • Eligibility: Strictly open to First Year Students (FE Only).");
+        newLogs.push("  • Team Size: Duo ONLY (Teams of 2). Individual play from each device.");
+        newLogs.push("  • Platform: Google Forms. Bring your own laptops / phones.");
+        newLogs.push("  • Registration: Closes 27 October 2026 on Unstop.");
         break;
       case "prizes":
-        newLogs.push("PODIUM:");
-        newLogs.push("  🥇 1st: Grand Shinobi Champion (Cash + IEEE-CS Honor + Merch)");
-        newLogs.push("  🥈 2nd: Elite Jonin (Cash + Certificate)");
-        newLogs.push("  🥉 3rd: Rising Chunin (Cash + Recognition)");
+        newLogs.push(`TOTAL PRIZE POOL: ${EVENT_CONFIG.prizePool}`);
+        newLogs.push("  🥈 2nd Place: THE BIGGEST PRIZE (The Inversion Champion)");
+        newLogs.push("  🥇 1st Place: Top Finisher Award & Recognition");
+        newLogs.push("  🎲 Mystery Rank: Secret Position Prize (Revealed Live)");
+        newLogs.push("  🔥 Last 5 Dare Showdown: Best Dare Award");
+        break;
+      case "schedule":
+        newLogs.push("TIMELINE & DATE:");
+        newLogs.push(`  • Registration Closes: ${EVENT_CONFIG.registrationDeadline}`);
+        newLogs.push(`  • Event Date: ${EVENT_CONFIG.date} (SPIT Mumbai)`);
+        newLogs.push("  • Timing: Starts 5:00 PM Onwards (Single-day showdown).");
         break;
       case "test":
-        newLogs.push("RUNNING CHAKRA BENCHMARK...");
-        newLogs.push("  [✓] Two-pointer array sweep: 0.04ms");
-        newLogs.push("  [✓] Dynamic programming state matrix: 0.12ms");
-        newLogs.push("  [✓] Graph topological traversal: PASS (0 bugs detected)");
-        newLogs.push("  ALL ALGORITHMIC SYSTEMS OPERATIONAL. You are combat ready.");
+        newLogs.push("RUNNING CHAKRA & LOGIC BENCHMARK...");
+        newLogs.push("  [✓] Duo Synergy Check: SYNCHRONIZED (2 Ninja Nodes Connected)");
+        newLogs.push("  [✓] Google Forms Connection: VERIFIED");
+        newLogs.push("  [✓] Paradox & Reverse Logic Matrix: INITIALIZED");
+        newLogs.push("  [✓] Dare Protocol Safety Locks: DISENGAGED (Chaos Ready)");
+        newLogs.push("  ALL SYSTEMS OPERATIONAL. You are combat ready for 28 October 5:00 PM!");
         break;
       case "clear":
-        setLogs(["Terminal cleared. Type 'help' for commands."]);
+        setLogs(["Terminal cleared. Type 'help' for available commands."]);
         setInputVal("");
         return;
       default:
@@ -90,15 +115,16 @@ export default function ShinobiTerminal() {
     >
       <div style={{ maxWidth: "980px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "36px" }} className="reveal-on-scroll">
-          <span className="chip chip-blue" style={{ marginBottom: "10px" }}>
-            ⚡ Interactive Gauntlet Console
+          <span className="chip chip-blue" style={{ marginBottom: "10px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <KonohaLeafSymbol size={14} color="var(--color-secondary-400)" />
+            <span>Shinobi Kernel Console</span>
           </span>
           <h2 className="section-heading">
             Shinobi{" "}
             <span style={{ color: "var(--action-primary)" }}>Terminal</span>
           </h2>
           <p style={{ fontSize: "14px", color: "var(--text-secondary)", marginTop: "10px" }}>
-            Query the competition kernel, verify your algorithmic status, or test your readiness.
+            Query the competition kernel, inspect the 6 rounds, or check the twist winning criteria.
           </p>
         </div>
 
@@ -130,12 +156,13 @@ export default function ShinobiTerminal() {
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "var(--color-akatsuki-red)", display: "inline-block" }} />
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "var(--color-accent-400)", display: "inline-block" }} />
               <span style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
-              <span className="shinobi-terminal-hostname" style={{ marginLeft: "12px", fontSize: "12px", color: "var(--color-secondary-300)", fontWeight: 600 }}>
-                brain_drain@ieee-cs-spit:~$ (chakra-sh)
+              <span className="shinobi-terminal-hostname" style={{ marginLeft: "12px", fontSize: "12px", color: "var(--color-secondary-300)", fontWeight: 600, display: "flex", alignItems: "center", gap: "6px" }}>
+                <KunaiIcon size={14} color="var(--color-secondary-300)" rotate={-45} />
+                <span>brain_drain@ieee-cs-spit:~$ (chakra-sh)</span>
               </span>
             </div>
             <span className="shinobi-terminal-live" style={{ fontSize: "11px", color: "var(--color-secondary-400)", letterSpacing: "0.05em" }}>
-              ● LIVE
+              ● 28 OCT · 5:00 PM ONWARDS
             </span>
           </div>
 
@@ -159,9 +186,9 @@ export default function ShinobiTerminal() {
                 style={{
                   color: log.startsWith(">")
                     ? "var(--color-primary-400)"
-                    : log.includes("[✓]") || log.includes("PASS")
+                    : log.includes("[✓]") || log.includes("VERIFIED")
                     ? "#4ade80"
-                    : log.includes("ONLINE") || log.includes("ACTIVE")
+                    : log.includes("READY") || log.includes("SYNCHRONIZED")
                     ? "var(--color-secondary-400)"
                     : "var(--color-neutral-200)",
                   wordBreak: "break-word",
@@ -185,36 +212,16 @@ export default function ShinobiTerminal() {
               flexWrap: "wrap",
             }}
           >
-            <span style={{ fontSize: "11px", color: "var(--color-neutral-600)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700 }}>
-              Quick Jutsu:
+            <span style={{ fontSize: "11px", color: "var(--color-neutral-600)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px" }}>
+              <ShurikenIcon size={10} color="var(--action-primary)" />
+              <span>Quick Jutsu:</span>
             </span>
-            {["help", "test", "rounds", "prizes", "rules", "clear"].map((cmd) => (
+            {["help", "twists", "rounds", "prizes", "rules", "schedule", "test", "clear"].map((cmd) => (
               <button
                 key={cmd}
                 type="button"
                 onClick={() => processCommand(cmd)}
-                className="shinobi-terminal-shortcut"
-                style={{
-                  background: "rgba(74, 147, 203, 0.12)",
-                  border: "1px solid rgba(74, 147, 203, 0.25)",
-                  color: "var(--color-secondary-300)",
-                  borderRadius: "6px",
-                  padding: "2px 8px",
-                  fontSize: "11px",
-                  cursor: "pointer",
-                  fontFamily: "monospace",
-                  transition: "all 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(249, 109, 46, 0.18)";
-                  e.currentTarget.style.borderColor = "rgba(249, 109, 46, 0.4)";
-                  e.currentTarget.style.color = "var(--color-primary-400)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(74, 147, 203, 0.12)";
-                  e.currentTarget.style.borderColor = "rgba(74, 147, 203, 0.25)";
-                  e.currentTarget.style.color = "var(--color-secondary-300)";
-                }}
+                className="terminal-cmd-btn"
               >
                 ${cmd}
               </button>
@@ -238,7 +245,7 @@ export default function ShinobiTerminal() {
             </span>
             <input
               type="text"
-              placeholder="Type command ('help', 'test', 'rounds', 'clear')..."
+              placeholder="Type command ('help', 'twists', 'rounds', 'prizes')..."
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               className="shinobi-terminal-input"

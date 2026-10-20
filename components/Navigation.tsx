@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { EVENT_CONFIG } from "@/constants/eventConfig";
+import { ShurikenIcon } from "./NarutoSymbols";
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
-  { href: "#rounds", label: "Rounds" },
+  { href: "#rounds", label: "6 Rounds" },
   { href: "#terminal", label: "Terminal" },
-  { href: "#schedule", label: "Schedule" },
+  { href: "#schedule", label: "Timeline" },
   { href: "#faq", label: "Rules & FAQ" },
   { href: "#gallery", label: "Gallery" },
-  { href: "#prizes", label: "Prizes" },
+  { href: "#prizes", label: "Prizes & Twists" },
 ];
 
 function ShinobiEmblem() {
@@ -91,7 +92,6 @@ export default function Navigation() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Scroll spy logic
       const sections = ["about", "rounds", "terminal", "schedule", "faq", "gallery", "prizes", "contact"];
       const scrollPos = window.scrollY + 140;
 
@@ -193,7 +193,7 @@ export default function Navigation() {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            gap: "clamp(10px, 1.6vw, 24px)",
+            gap: "clamp(8px, 1.4vw, 20px)",
           }}
         >
           {NAV_LINKS.map((link) => {
@@ -212,6 +212,7 @@ export default function Navigation() {
                   color: isActive ? "var(--action-primary)" : "var(--text-secondary)",
                   fontWeight: isActive ? 600 : 500,
                   transition: "all 0.2s ease",
+                  fontSize: "13.5px",
                 }}
               >
                 {link.label}
@@ -241,20 +242,19 @@ export default function Navigation() {
           </button>
 
           <button
-            className={`desktop-nav nav-link ${activeSection === "#contact" ? "active" : ""}`}
-            onClick={() => handleNavClick("#contact")}
+            className="desktop-nav btn-primary"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-register-modal"))}
             style={{
-              background: activeSection === "#contact" ? "rgba(249, 109, 46, 0.15)" : "none",
-              border: "none",
-              cursor: "pointer",
-              padding: "6px 14px",
-              borderRadius: "9999px",
-              color: activeSection === "#contact" ? "var(--action-primary)" : "var(--text-secondary)",
-              fontWeight: activeSection === "#contact" ? 600 : 500,
-              transition: "all 0.2s ease",
+              height: "36px",
+              padding: "0 16px",
+              fontSize: "12.5px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
             }}
           >
-            Contact Us
+            <ShurikenIcon size={12} color="#fff" />
+            <span>Register Duo</span>
           </button>
 
           <button
@@ -342,7 +342,7 @@ export default function Navigation() {
                     window.dispatchEvent(new CustomEvent("open-register-modal"));
                   }}
                 >
-                  Register Now
+                  Register Now (Duo)
                 </button>
               </div>
             </nav>
@@ -352,5 +352,3 @@ export default function Navigation() {
     </>
   );
 }
-
-

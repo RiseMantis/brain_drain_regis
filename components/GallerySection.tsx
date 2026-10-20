@@ -1,36 +1,45 @@
 "use client";
 
 import Image from "next/image";
+import { ShurikenIcon, KonohaLeafSymbol } from "./NarutoSymbols";
 
-// Gallery uses the hero and mission images we already have.
-// In production, these would be real event photos.
+/**
+ * 📸 GALLERY PHOTOS PATH:
+ * Place your event / last year photos inside:
+ *   /public/gallery/photo1.jpg
+ *   /public/gallery/photo2.jpg
+ *   /public/gallery/photo3.jpg
+ *   /public/gallery/photo4.jpg
+ *
+ * You can easily replace the files in `public/gallery/` or add more items to this array.
+ */
 const GALLERY_ITEMS = [
   {
     id: "gallery-1",
-    src: "/hero-bg.jpg",
-    alt: "Shinobi landscape at sunset — cinematic event atmosphere",
-    label: "Event Atmosphere",
+    src: "/gallery/photo1.jpg",
+    alt: "Brain Drain Event Atmosphere",
+    label: "Hidden Leaf Arena",
     span: "wide",
   },
   {
     id: "gallery-2",
-    src: "/mission-thumb.jpg",
-    alt: "Glowing mission scroll — coding challenge teaser",
-    label: "Mission Revealed",
+    src: "/gallery/photo2.jpg",
+    alt: "Brain Drain Coding & Tech Quiz",
+    label: "Ninjutsu Scrolls",
     span: "tall",
   },
   {
     id: "gallery-3",
-    src: "/hero-bg.jpg",
-    alt: "Mountain silhouettes — the journey begins",
-    label: "The Arena",
+    src: "/gallery/photo3.jpg",
+    alt: "Participants Battle in Duo Squads",
+    label: "Shinobi Duo Squads",
     span: "normal",
   },
   {
     id: "gallery-4",
-    src: "/mission-thumb.jpg",
-    alt: "Chakra energy scroll — tech quiz preparation",
-    label: "Knowledge Scroll",
+    src: "/gallery/photo4.jpg",
+    alt: "Tech Quiz and Chaos Protocol",
+    label: "Knowledge Jutsu",
     span: "normal",
   },
 ];
@@ -47,33 +56,34 @@ export default function GallerySection() {
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Header */}
-        <div style={{ marginBottom: "48px" }}>
-          <p className="eyebrow" style={{ marginBottom: "12px" }}>
-            📸 Gallery
+        <div style={{ marginBottom: "44px" }}>
+          <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)", display: "flex", alignItems: "center", gap: "6px" }}>
+            <ShurikenIcon size={14} color="var(--action-primary)" />
+            <span>Shinobi Archives</span>
           </p>
           <h2 className="section-heading">
-            The{" "}
-            <span style={{ color: "var(--action-primary)" }}>World</span>{" "}
-            of Brain Drain
+            Glimpses of{" "}
+            <span style={{ color: "var(--action-primary)" }}>Brain Drain</span>
           </h2>
           <p
             style={{
-              marginTop: "14px",
+              marginTop: "12px",
               fontSize: "15px",
-              color: "var(--text-muted)",
+              color: "var(--text-secondary)",
+              maxWidth: "540px",
             }}
           >
-            A glimpse into the atmosphere, energy, and intensity of the event.
+            Memories of past editions, intense quiz showdowns, and high-energy shinobi chaos at SPIT.
           </p>
         </div>
 
-        {/* Grid */}
+        {/* Clean Responsive Grid */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gridAutoRows: "220px",
-            gap: "14px",
+            gridAutoRows: "230px",
+            gap: "16px",
           }}
         >
           {GALLERY_ITEMS.map((item, i) => (
@@ -82,10 +92,12 @@ export default function GallerySection() {
               id={item.id}
               className={`gallery-item ${item.span === "wide" ? "gallery-span-wide" : ""} ${item.span === "tall" ? "gallery-span-tall" : ""} reveal-on-scroll`}
               style={{
-                minHeight: "220px",
+                minHeight: "230px",
                 borderRadius: "16px",
                 border: "1px solid var(--border-subtle)",
-                transitionDelay: `${i * 100}ms`,
+                transitionDelay: `${i * 90}ms`,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
               <Image
@@ -95,7 +107,7 @@ export default function GallerySection() {
                 sizes={item.span === "wide" ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw"}
                 style={{
                   objectFit: "cover",
-                  objectPosition: i % 2 === 0 ? "center 30%" : "center",
+                  objectPosition: "center",
                 }}
               />
               <div className="gallery-overlay" />
@@ -108,24 +120,37 @@ export default function GallerySection() {
                   zIndex: 2,
                 }}
               >
-                <span className="chip" style={{ fontSize: "10px" }}>
-                  {item.label}
+                <span className="chip chip-orange" style={{ fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
+                  <KonohaLeafSymbol size={12} color="#fff" />
+                  <span>{item.label}</span>
                 </span>
               </div>
             </div>
           ))}
         </div>
 
-        <p
+        <div
           style={{
             marginTop: "24px",
-            fontSize: "13px",
-            color: "var(--text-muted)",
-            textAlign: "center",
+            padding: "14px 20px",
+            background: "var(--surface)",
+            borderRadius: "12px",
+            border: "1px solid var(--border-subtle)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "10px",
           }}
         >
-          Event photography will be updated after the event. Stay tuned.
-        </p>
+          <span style={{ fontSize: "12.5px", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "6px" }}>
+            <ShurikenIcon size={12} color="var(--action-primary)" />
+            <span>Gallery image folder path: <code style={{ color: "var(--action-primary)", background: "rgba(249,109,46,0.1)", padding: "2px 6px", borderRadius: "4px" }}>public/gallery/</code></span>
+          </span>
+          <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+            Replace <code>photo1.jpg</code> to <code>photo4.jpg</code> anytime to update past photos!
+          </span>
+        </div>
       </div>
     </section>
   );

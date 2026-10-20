@@ -1,33 +1,34 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { EVENT_CONFIG } from "@/constants/eventConfig";
+import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, UzumakiSpiral } from "./NarutoSymbols";
 
-/* ─── Pillar data (unchanged content) ─────────────────────── */
 const PILLARS = [
   {
-    icon: "⚡",
-    title: "Strategic",
-    description: "Every decision counts. Plan your approach like a seasoned jonin.",
+    icon: <KunaiIcon size={24} color="var(--action-primary)" />,
+    title: "Duo Only",
+    description: "Form a 2-ninja squad. Play individually from your own devices via Google Forms to pile up your duo points.",
   },
   {
-    icon: "🎯",
-    title: "Competitive",
-    description: "Go head-to-head against the sharpest minds from across institutions.",
+    icon: <UzumakiSpiral size={24} color="var(--color-primary-400)" />,
+    title: "Logic Meets Chaos",
+    description: "6 rapid rounds featuring easy logic-based coding, tech trivia, and questions that throw standard logic out the window!",
   },
   {
-    icon: "🌀",
-    title: "Unpredictable",
-    description: "Rules shift. Formats evolve. Only the truly adaptable survive.",
+    icon: <ShurikenIcon size={24} color="var(--color-accent-400)" />,
+    title: "Twist Rewards",
+    description: "2nd position takes the BIGGEST prize! Plus a secret random rank prize and the bottom-5 dare challenge.",
   },
   {
-    icon: "🏆",
-    title: "Rewarding",
-    description: "Top shinobi earn prizes, recognition, and a place in the rankings.",
+    icon: <KonohaLeafSymbol size={24} color="var(--color-secondary-400)" />,
+    title: "5:00 PM Onwards",
+    description: "Single-day shinobi showdown on 28 October 2026 starting 5:00 PM onwards. Open to First Year Students only.",
   },
 ];
 
 /* ─── SVG: decorative Leaf-Village-inspired spiral seal ──────
-   Hand-drawn spiral, not a reproduction of any official logo.  */
+   Hand-drawn spiral with cardinal shuriken marks.  */
 function SpiralSeal() {
   return (
     <svg
@@ -40,7 +41,7 @@ function SpiralSeal() {
       <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.45" />
       {/* Inner ring */}
       <circle cx="60" cy="60" r="42" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-      {/* Spiral path — 2.5 turns */}
+      {/* Spiral path */}
       <path
         d="M60,60
            m0,-28
@@ -55,17 +56,16 @@ function SpiralSeal() {
       />
       {/* Centre dot */}
       <circle cx="60" cy="60" r="4" fill="currentColor" opacity="0.5" />
-      {/* Four-petal diamond marks at cardinal points */}
+      {/* Four-point shuriken marks at cardinal points */}
       {[0, 90, 180, 270].map((angle) => (
         <g key={angle} transform={`rotate(${angle} 60 60)`}>
-          <path d="M60,14 L63,20 L60,26 L57,20 Z" fill="currentColor" opacity="0.35" />
+          <path d="M60,12 L64,20 L60,26 L56,20 Z" fill="currentColor" opacity="0.4" />
         </g>
       ))}
     </svg>
   );
 }
 
-/* ─── Main component ─────────────────────────────────────── */
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const hasUnrolled = useRef(false);
@@ -74,14 +74,12 @@ export default function AboutSection() {
     const section = sectionRef.current;
     if (!section) return;
 
-    /* Respect prefers-reduced-motion: open immediately, no animation */
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
       section.classList.add("scroll-open");
       return;
     }
 
-    /* IntersectionObserver — trigger at ~35 % in view, play only once */
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -93,8 +91,8 @@ export default function AboutSection() {
         });
       },
       {
-        threshold: 0.35,
-        rootMargin: "0px 0px -60px 0px",
+        threshold: 0.25,
+        rootMargin: "0px 0px -40px 0px",
       }
     );
 
@@ -103,15 +101,13 @@ export default function AboutSection() {
   }, []);
 
   return (
-    /* ── Outer section: acts as the "stage" — no background override needed,
-          the fire-background-content rule already makes it transparent.      */
     <section
       id="about"
       ref={sectionRef}
       aria-label="About Brain Drain"
       className="shinobi-scroll-section"
     >
-      {/* ── Scroll wrapper — this element animates the full height ── */}
+      {/* ── Scroll wrapper ── */}
       <div className="shinobi-scroll-wrapper" aria-hidden="false">
 
         {/* ── TOP ROD ── */}
@@ -121,16 +117,16 @@ export default function AboutSection() {
           <span className="scroll-rod-cap scroll-rod-cap-right" />
         </div>
 
-        {/* ── TIE / CORD (visible while closed, fades out as it opens) ── */}
+        {/* ── TIE / CORD ── */}
         <div className="scroll-tie" aria-hidden="true">
           <span className="scroll-tie-horizontal" />
           <span className="scroll-tie-bow scroll-tie-bow-left" />
           <span className="scroll-tie-bow scroll-tie-bow-right" />
         </div>
 
-        {/* ── PARCHMENT BODY — clips content during roll ── */}
+        {/* ── PARCHMENT BODY ── */}
         <div className="scroll-parchment">
-          {/* SVG noise texture layer (feTurbulence paper grain) */}
+          {/* SVG noise texture layer */}
           <svg aria-hidden="true" className="scroll-noise-svg" xmlns="http://www.w3.org/2000/svg">
             <filter id="scroll-paper-noise" x="0%" y="0%" width="100%" height="100%">
               <feTurbulence
@@ -146,53 +142,57 @@ export default function AboutSection() {
             <rect width="100%" height="100%" filter="url(#scroll-paper-noise)" opacity="0.18" />
           </svg>
 
-          {/* Parchment vignette / edge darkening overlay */}
+          {/* Parchment vignette */}
           <div className="scroll-vignette" aria-hidden="true" />
-
-          {/* Faint ink-brush border frame */}
           <div className="scroll-border-frame" aria-hidden="true" />
 
-          {/* Decorative seal (centre watermark) */}
+          {/* Decorative seal */}
           <div className="scroll-seal" aria-hidden="true">
             <SpiralSeal />
           </div>
 
-          {/* ── Actual content — fades in after parchment opens ── */}
+          {/* ── Content inside scroll ── */}
           <div className="scroll-content-inner">
-
-            {/* Two-column layout — matches original structure */}
             <div className="scroll-content-grid">
 
-              {/* Left: copy */}
+              {/* Left: Event Description & Why Participate */}
               <div className="scroll-content-left scroll-fade-child" style={{ "--child-delay": "0ms" } as React.CSSProperties}>
-                <p className="eyebrow scroll-eyebrow" style={{ marginBottom: "12px" }}>
-                  🌀 About the Event
-                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                  <KonohaLeafSymbol size={18} color="var(--action-primary)" />
+                  <p className="eyebrow scroll-eyebrow" style={{ margin: 0 }}>
+                    What Is Brain Drain?
+                  </p>
+                </div>
+                
                 <h2 className="section-heading scroll-heading" style={{ marginBottom: "20px" }}>
-                  What Is{" "}
-                  <span className="scroll-heading-accent">Brain Drain?</span>
+                  Where Logic{" "}
+                  <span className="scroll-heading-accent">Meets Chaos!!</span>
                 </h2>
                 <p className="scroll-body-text scroll-fade-child" style={{ marginBottom: "16px", "--child-delay": "80ms" } as React.CSSProperties}>
-                  Brain Drain is the annual flagship coding and technology quiz competition
-                  organized by <strong className="scroll-strong">IEEE-CS SPIT</strong> — the
-                  IEEE Computer Society student chapter at Sardar Patel Institute of Technology, Mumbai.
+                  {EVENT_CONFIG.description}
                 </p>
-                <p className="scroll-body-text scroll-fade-child" style={{ marginBottom: "24px", "--child-delay": "160ms" } as React.CSSProperties}>
-                  Inspired by the shinobi world, participants face multi-round challenges that test
-                  algorithmic thinking, technical knowledge, and the ability to adapt on the fly.
-                  One event. Three rounds. Unlimited chaos.
-                </p>
+                
+                <div style={{ marginTop: "18px", marginBottom: "18px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                    <ShurikenIcon size={14} color="var(--action-primary)" />
+                    <p className="eyebrow scroll-eyebrow" style={{ margin: 0, color: "var(--action-primary)" }}>
+                      Why Participate?
+                    </p>
+                  </div>
+                  <p className="scroll-body-text scroll-fade-child" style={{ marginBottom: "20px", "--child-delay": "160ms" } as React.CSSProperties}>
+                    {EVENT_CONFIG.whyParticipate}
+                  </p>
+                </div>
 
                 {/* Mission statement */}
                 <div className="scroll-mission-tab scroll-fade-child" style={{ "--child-delay": "240ms" } as React.CSSProperties}>
                   <p className="scroll-mission-text">
-                    &ldquo;A shinobi mission in which participants battle through coding puzzles,
-                    technology trivia, and surprising challenges.&rdquo;
+                    &ldquo;Individual play, duo squads, 6 rapid rounds on Google Forms, and unpredictable twists worthy of a shinobi.&rdquo;
                   </p>
                 </div>
               </div>
 
-              {/* Right: pillars */}
+              {/* Right: Pillars */}
               <div className="about-pillars-grid">
                 {PILLARS.map((pillar, idx) => (
                   <div
@@ -200,7 +200,7 @@ export default function AboutSection() {
                     className="scroll-pillar-card scroll-fade-child"
                     style={{ "--child-delay": `${320 + idx * 90}ms` } as React.CSSProperties}
                   >
-                    <div className="scroll-pillar-icon" aria-hidden="true">
+                    <div className="scroll-pillar-icon" aria-hidden="true" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                       {pillar.icon}
                     </div>
                     <p className="scroll-pillar-title">{pillar.title}</p>

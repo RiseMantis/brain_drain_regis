@@ -2,76 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
-// function ChakraRoute() {
-//   return (
-//     <svg
-//       viewBox="0 0 280 320"
-//       fill="none"
-//       xmlns="http://www.w3.org/2000/svg"
-//       className="chakra-route-svg"
-//       style={{
-//         position: "absolute",
-//         right: "5%",
-//         top: "15%",
-//         width: "280px",
-//         height: "320px",
-//         pointerEvents: "none",
-//         zIndex: 5,
-//       }}
-//       aria-hidden="true"
-//     >
-//       {/* Main path */}
-//       <path
-//         d="M240 20 C200 40, 160 60, 140 100 C120 140, 130 180, 100 220 C75 255, 50 280, 20 300"
-//         stroke="#38bdf8"
-//         strokeWidth="1.8"
-//         strokeLinecap="round"
-//         strokeDasharray="6 4"
-//         className="animate-chakra"
-//         opacity="0.75"
-//       />
-//       {/* Secondary branch */}
-//       <path
-//         d="M140 100 C170 110, 195 130, 210 160"
-//         stroke="#38bdf8"
-//         strokeWidth="1.2"
-//         strokeLinecap="round"
-//         strokeDasharray="4 5"
-//         opacity="0.4"
-//       />
-//       {/* Nodes */}
-//       {[
-//         { cx: 240, cy: 20, delay: "0s" },
-//         { cx: 160, cy: 70, delay: "0.4s" },
-//         { cx: 140, cy: 100, delay: "0.8s" },
-//         { cx: 100, cy: 175, delay: "1.2s" },
-//         { cx: 50, cy: 250, delay: "1.6s" },
-//       ].map((node, i) => (
-//         <g key={i}>
-//           {/* Glow */}
-//           <circle
-//             cx={node.cx}
-//             cy={node.cy}
-//             r="8"
-//             fill="rgba(56,189,248,0.15)"
-//           />
-//           {/* Outer ring */}
-//           <circle
-//             cx={node.cx}
-//             cy={node.cy}
-//             r="5"
-//             stroke="#172554"
-//             strokeWidth="2"
-//             fill="#38bdf8"
-//             className="animate-node"
-//             style={{ animationDelay: node.delay }}
-//           />
-//         </g>
-//       ))}
-//     </svg>
-//   );
-// }
+import { EVENT_CONFIG } from "@/constants/eventConfig";
+import { ShurikenIcon, KunaiIcon, KonohaLeafSymbol, ShinobiHeadbandPlate } from "./NarutoSymbols";
 
 function MissionCard() {
   return (
@@ -81,8 +13,8 @@ function MissionCard() {
         position: "absolute",
         top: "clamp(72px, 10%, 110px)",
         right: "clamp(20px, 6%, 64px)",
-        width: "clamp(260px, 28vw, 330px)",
-        padding: "18px 20px",
+        width: "clamp(280px, 30vw, 360px)",
+        padding: "20px 22px",
         zIndex: 10,
       }}
     >
@@ -91,14 +23,15 @@ function MissionCard() {
         <div style={{ flex: 1 }}>
           <p
             className="eyebrow"
-            style={{ marginBottom: "8px", color: "var(--action-primary)" }}
+            style={{ marginBottom: "8px", color: "var(--action-primary)", display: "flex", alignItems: "center", gap: "6px" }}
           >
-            ⚡ Mission Briefing
+            <ShurikenIcon size={14} color="var(--action-primary)" />
+            <span>{EVENT_CONFIG.date} · 5:00 PM Onwards</span>
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-            <span className="chip chip-orange">Code Battles</span>
-            <span className="chip chip-blue">Tech Quiz</span>
-            <span className="chip chip-green">Surprise Rounds</span>
+            <span className="chip chip-orange">Duos Only (Teams of 2)</span>
+            <span className="chip chip-blue">6 Rapid Rounds</span>
+            <span className="chip chip-green">Prize: {EVENT_CONFIG.prizePool}</span>
           </div>
         </div>
         {/* Thumbnail */}
@@ -115,12 +48,11 @@ function MissionCard() {
         >
           <Image
             src="/mission-thumb.jpg"
-            alt="Mission teaser — glowing scroll"
+            alt="Brain Drain Mission Teaser"
             fill
             sizes="70px"
             style={{ objectFit: "cover" }}
           />
-          {/* Play overlay */}
           <div
             style={{
               position: "absolute",
@@ -155,12 +87,15 @@ function MissionCard() {
         style={{
           fontSize: "17px",
           fontWeight: 700,
-          lineHeight: 1.1,
+          lineHeight: 1.2,
           color: "var(--text-primary)",
           marginBottom: "6px",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
         }}
       >
-        Every round hides a new twist.
+        <span>Where logic gets thrown out the window.</span>
       </h3>
 
       {/* Description */}
@@ -169,10 +104,10 @@ function MissionCard() {
           fontSize: "12px",
           color: "var(--text-muted)",
           marginBottom: "12px",
-          lineHeight: 1.4,
+          lineHeight: 1.45,
         }}
       >
-        Logic, speed, and a little shinobi chaos.
+        2nd place gets the biggest prize! Random rank rewards, logic-bending quizzes, and a bottom-5 dare showdown.
       </p>
 
       {/* Metadata row */}
@@ -184,7 +119,7 @@ function MissionCard() {
             <line x1="4" y1="1" x2="4" y2="3.5" />
             <line x1="1" y1="5" x2="11" y2="5" />
           </svg>
-          TBA
+          28 Oct 2026 · Starts 5:00 PM Onwards
         </span>
         <span className="meta-chip">
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -192,6 +127,9 @@ function MissionCard() {
             <circle cx="6" cy="4.5" r="1.2" />
           </svg>
           SPIT, Mumbai
+        </span>
+        <span className="meta-chip" style={{ color: "var(--action-primary)" }}>
+          FE Students Only
         </span>
       </div>
     </div>
@@ -278,20 +216,24 @@ export default function HeroSection() {
         }}
       >
         {/* Left hero content */}
-        <div style={{ maxWidth: "540px" }}>
-          {/* Eyebrow */}
-          <p
-            className="eyebrow animate-fade-in-up"
-            style={{ marginBottom: "16px" }}
-          >
-            IEEE-CS SPIT Presents
-          </p>
+        <div style={{ maxWidth: "580px" }}>
+          {/* Eyebrow with Naruto Headband Plate */}
+          <div className="animate-fade-in-up" style={{ marginBottom: "14px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+            <ShinobiHeadbandPlate text="IEEE CS PRESENTS" />
+            <span style={{ color: "var(--text-muted)", fontSize: "12px" }}>•</span>
+            <span style={{ fontSize: "12px", color: "var(--color-primary-300)", fontWeight: 700, letterSpacing: "0.05em" }}>
+              28 OCT 2026 · 5:00 PM ONWARDS
+            </span>
+          </div>
 
-          {/* Main title */}
-          <div className="animate-fade-in-up delay-100" style={{ marginBottom: "12px" }}>
+          {/* Main title with Konoha accent */}
+          <div className="animate-fade-in-up delay-100" style={{ marginBottom: "14px", position: "relative" }}>
             <h1 className="text-hero" style={{ display: "block" }}>
               <span style={{ color: "var(--text-primary)", display: "block" }}>BRAIN</span>
-              <span style={{ color: "var(--action-primary)", display: "block" }}>DRAIN</span>
+              <span style={{ color: "var(--action-primary)", display: "inline-flex", alignItems: "center", gap: "12px" }}>
+                DRAIN
+                <KunaiIcon size={38} color="var(--color-primary-400)" rotate={45} />
+              </span>
             </h1>
           </div>
 
@@ -299,33 +241,51 @@ export default function HeroSection() {
           <p
             className="animate-fade-in-up delay-200"
             style={{
-              fontSize: "clamp(14px, 1.8vw, 18px)",
-              color: "var(--text-secondary)",
-              fontWeight: 500,
-              marginBottom: "8px",
-              lineHeight: 1.4,
+              fontSize: "clamp(16px, 2.2vw, 22px)",
+              color: "var(--color-accent-400)",
+              fontFamily: "var(--font-display)",
+              letterSpacing: "0.05em",
+              marginBottom: "10px",
+              lineHeight: 1.2,
+              textTransform: "uppercase",
+              textShadow: "0 0 16px rgba(232, 228, 26, 0.35)",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
-            Outthink the opponent. Outsmart the challenge.
+            <KonohaLeafSymbol size={22} color="var(--color-accent-400)" />
+            <span>{EVENT_CONFIG.tagline}</span>
           </p>
 
           {/* Supporting */}
           <p
             className="animate-fade-in-up delay-300"
             style={{
-              fontSize: "13px",
-              color: "var(--text-muted)",
-              marginBottom: "28px",
-              lineHeight: 1.5,
+              fontSize: "14px",
+              color: "var(--text-secondary)",
+              marginBottom: "24px",
+              lineHeight: 1.6,
             }}
           >
-            Coding battles, tech trivia, and twists worthy of a shinobi.
+            A fun, quiz-based shinobi competition where duos form, compete individually on Google Forms, and win prizes unpredictably. 6 rapid rounds starting 5:00 PM onwards!
           </p>
+
+          {/* Key Quick Badges */}
+          <div
+            className="animate-fade-in-up delay-300"
+            style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "26px" }}
+          >
+            <span className="chip chip-orange">🏆 Prize Pool: {EVENT_CONFIG.prizePool}</span>
+            <span className="chip chip-blue">👥 Duo ONLY (Teams of 2)</span>
+            <span className="chip">🎓 First Years Only</span>
+            <span className="chip chip-green">⏱ Starts 5:00 PM Onwards</span>
+          </div>
 
           {/* CTAs */}
           <div
             className="animate-fade-in-up delay-400"
-            style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}
+            style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}
           >
             <a
               href="#register"
@@ -343,7 +303,7 @@ export default function HeroSection() {
               </svg>
             </a>
             <a href="#rounds" className="link-secondary">
-              Explore the Rounds
+              Explore the 6 Rounds
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                 <line x1="2" y1="6" x2="10" y2="6" />
                 <polyline points="6,2 10,6 6,10" />
@@ -352,7 +312,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Decorative chakra route + floating card (responsive with subtle counter-parallax) */}
+        {/* Decorative floating card */}
         <div
           className="hero-right-col"
           style={{
@@ -360,7 +320,6 @@ export default function HeroSection() {
             transition: "transform 0.05s linear",
           }}
         >
-          {/* <ChakraRoute /> */}
           <MissionCard />
         </div>
       </div>

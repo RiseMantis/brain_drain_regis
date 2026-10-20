@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { EVENT_CONFIG } from "@/constants/eventConfig";
 
 export const metadata: Metadata = {
-  title: "Brain Drain — IEEE-CS SPIT | Shinobi Coding Challenge",
-  description:
-    "Brain Drain is a Naruto-inspired coding competition and technology quiz organized by IEEE-CS SPIT. Outthink the opponent. Outsmart the challenge. Code battles, tech trivia, and twists worthy of a shinobi.",
+  title: `${EVENT_CONFIG.title} — ${EVENT_CONFIG.organizerShort} | Where Logic Meets Chaos!!`,
+  description: `${EVENT_CONFIG.title} is a fun, quiz-based competition organized by ${EVENT_CONFIG.organizerShort}. 6 rounds, duos only, unpredictable twists, and ₹4000+ prize pool on ${EVENT_CONFIG.date}.`,
   keywords: [
     "Brain Drain",
     "IEEE-CS SPIT",
-    "coding competition",
-    "tech quiz",
-    "hackathon",
-    "shinobi",
-    "Naruto",
+    "quiz competition",
+    "logic meets chaos",
+    "first year students",
+    "duo competition",
+    "coding quiz",
+    "SPIT Mumbai",
+    "Unstop",
   ],
   openGraph: {
-    title: "Brain Drain — IEEE-CS SPIT",
-    description: "Outthink. Outcode. Outlast. A shinobi coding challenge.",
+    title: `${EVENT_CONFIG.title} — ${EVENT_CONFIG.organizerShort}`,
+    description: "Where Logic Meets Chaos!! 28 October 2026. Duos only.",
     type: "website",
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>

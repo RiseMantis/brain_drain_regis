@@ -6,7 +6,6 @@ import Image from "next/image";
 export default function ScrollFeatures() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [isTeleporting, setIsTeleporting] = useState(false);
   const teleportTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -67,7 +66,6 @@ export default function ScrollFeatures() {
   const scrollToTop = () => {
     if (isTeleporting) return;
     setIsTeleporting(true);
-    setHovered(false);
 
     window.scrollTo({
       top: 0,
@@ -129,8 +127,9 @@ export default function ScrollFeatures() {
         </div>
       </div>
 
-      {/* ── Floating Shinobi Teleport (Scroll To Top) Button ── */}
+      {/* ── Floating Shinobi Teleport (Scroll To Top) Button Container ── */}
       <div
+        className={`teleport-container ${isTeleporting ? "is-teleporting" : ""}`}
         style={{
           position: "fixed",
           bottom: "clamp(20px, 4vw, 36px)",
@@ -142,14 +141,14 @@ export default function ScrollFeatures() {
           transition: "opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        {/* Tooltip */}
+        {/* Tooltip — Controlled purely by CSS hover, never gets stuck */}
         <div
           aria-hidden="true"
+          className="teleport-tooltip"
           style={{
             position: "absolute",
             bottom: "calc(100% + 8px)",
             right: "50%",
-            transform: "translateX(50%)",
             padding: "4px 10px",
             background: "var(--surface)",
             border: "1px solid var(--border-default)",
@@ -161,9 +160,7 @@ export default function ScrollFeatures() {
             color: "var(--action-primary)",
             whiteSpace: "nowrap",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
-            opacity: hovered && !isTeleporting ? 1 : 0,
             pointerEvents: "none",
-            transition: "opacity 0.15s ease",
           }}
         >
           ⚡ Flying Raijin Teleport
@@ -171,8 +168,6 @@ export default function ScrollFeatures() {
 
         <button
           onClick={scrollToTop}
-          onMouseEnter={() => !isTeleporting && setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
           disabled={isTeleporting}
           aria-label={isTeleporting ? "Flying Raijin Teleporting..." : "Scroll back to top"}
           className={`teleport-jutsu-btn ${isTeleporting ? "teleporting" : ""}`}
