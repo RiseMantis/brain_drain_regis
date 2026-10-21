@@ -107,50 +107,66 @@ export default function RoundsSection() {
         overflow: "hidden",
       }}
     >
-      {/* Gaara decorative character — right edge */}
-      <Image
-        src="/characters/gaara.png"
-        alt=""
-        aria-hidden="true"
-        width={380}
-        height={656}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: "-20px",
-          height: "clamp(260px, 40vw, 500px)",
-          width: "auto",
-          objectFit: "contain",
-          opacity: 0.15,
-          filter: "drop-shadow(0 0 24px rgba(200,16,46,0.2))",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-        {/* Section header */}
-        <div style={{ marginBottom: "52px", maxWidth: "660px" }} className="reveal-on-scroll">
-          <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)", display: "flex", alignItems: "center", gap: "6px" }}>
-            <ShurikenIcon size={14} color="var(--action-primary)" />
-            <span>Shinobi Round Breakdown</span>
-          </p>
-          <h2 className="section-heading">
-            Six Rounds.{" "}
-            <span style={{ color: "var(--action-primary)" }}>
-              Six Shinobi Trials.
-            </span>
-          </h2>
-          <p
+        {/* Section header with Gaara character guardian */}
+        <div
+          className="reveal-on-scroll"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "52px",
+            gap: "24px",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ maxWidth: "660px", flex: "1 1 320px" }}>
+            <p className="eyebrow" style={{ marginBottom: "12px", color: "var(--action-primary)", display: "flex", alignItems: "center", gap: "6px" }}>
+              <ShurikenIcon size={14} color="var(--action-primary)" />
+              <span>Shinobi Round Breakdown</span>
+            </p>
+            <h2 className="section-heading">
+              Six Rounds.{" "}
+              <span style={{ color: "var(--action-primary)" }}>
+                Six Shinobi Trials.
+              </span>
+            </h2>
+            <p
+              style={{
+                marginTop: "16px",
+                fontSize: "15px",
+                color: "var(--text-secondary)",
+                lineHeight: 1.6,
+              }}
+            >
+              All 6 rounds will be conducted sequentially on <strong>{EVENT_CONFIG.date} starting 5:00 PM Onwards</strong> at SPIT Mumbai.
+              Each participant plays individually on Google Forms from their own device, accumulating points on the master leaderboard!
+            </p>
+          </div>
+
+          {/* Gaara of the Desert — Trials Overseer */}
+          <div
             style={{
-              marginTop: "16px",
-              fontSize: "15px",
-              color: "var(--text-secondary)",
-              lineHeight: 1.6,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
             }}
           >
-            All 6 rounds will be conducted sequentially on <strong>{EVENT_CONFIG.date} starting 5:00 PM Onwards</strong> at SPIT Mumbai.
-            Each participant plays individually on Google Forms from their own device, accumulating points on the master leaderboard!
-          </p>
+            <Image
+              src="/characters/gaara.png"
+              alt="Gaara of the Desert - Guardian of Trials"
+              width={260}
+              height={448}
+              priority
+              style={{
+                height: "clamp(190px, 24vw, 280px)",
+                width: "auto",
+                objectFit: "contain",
+                filter: "drop-shadow(0 0 32px rgba(200, 16, 46, 0.45))",
+              }}
+            />
+          </div>
         </div>
 
         {/* 6 Round cards grid */}

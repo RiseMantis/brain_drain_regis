@@ -598,6 +598,7 @@ body {
   .hero-right-col {
     position: relative !important;
     width: 100% !important;
+    height: 380px !important;
     margin-top: 36px;
   }
   .hero-right-col .chakra-route-svg {

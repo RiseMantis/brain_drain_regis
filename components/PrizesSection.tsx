@@ -103,26 +103,6 @@ export default function PrizesSection() {
         overflow: "hidden",
       }}
     >
-      {/* Naru2 decorative character — left edge */}
-      <Image
-        src="/characters/naru2-scroll.png"
-        alt=""
-        aria-hidden="true"
-        width={414}
-        height={603}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: "-30px",
-          height: "clamp(240px, 38vw, 440px)",
-          width: "auto",
-          objectFit: "contain",
-          opacity: 0.18,
-          filter: "drop-shadow(0 0 24px rgba(249,109,46,0.2))",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "52px" }} className="reveal-on-scroll">
@@ -329,35 +309,52 @@ export default function PrizesSection() {
           ))}
         </div>
 
-        {/* Twists Summary Banner */}
+        {/* Twists Summary Banner with Naruto Secret Scroll Character */}
         <div
           className="reveal-on-scroll"
           style={{
-            background: "linear-gradient(135deg, rgba(249, 109, 46, 0.1) 0%, rgba(74, 147, 203, 0.1) 100%)",
+            background: "linear-gradient(135deg, rgba(249, 109, 46, 0.12) 0%, rgba(74, 147, 203, 0.12) 100%)",
             border: "1px dashed var(--action-primary)",
-            borderRadius: "18px",
+            borderRadius: "20px",
             padding: "24px 28px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             flexWrap: "wrap",
-            gap: "16px",
+            gap: "20px",
           }}
         >
-          <div>
-            <h4 style={{ fontSize: "16px", fontWeight: 700, color: "var(--text-primary)", marginBottom: "4px", display: "flex", alignItems: "center", gap: "8px" }}>
-              <KonohaLeafSymbol size={18} color="var(--action-primary)" />
-              <span>The Brain Drain Winning Philosophy</span>
-            </h4>
-            <p style={{ fontSize: "13px", color: "var(--text-secondary)", maxWidth: "720px", lineHeight: 1.5 }}>
-              Forget traditional contests where only #1 matters. Here, <strong>2nd place is the jackpot</strong>, 
-              anyone can win the <strong>Mystery Rank</strong>, and the <strong>Last 5 Dare</strong> keeps the excitement blazing till the very end!
-            </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "22px", flexWrap: "wrap", flex: 1 }}>
+            {/* Naruto holding the Secret Prize Scroll */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <Image
+                src="/characters/naru2-scroll.png"
+                alt="Naruto holding Secret Prize Scroll"
+                width={160}
+                height={233}
+                style={{
+                  height: "clamp(120px, 16vw, 150px)",
+                  width: "auto",
+                  objectFit: "contain",
+                  filter: "drop-shadow(0 0 20px rgba(249, 109, 46, 0.5))",
+                }}
+              />
+            </div>
+            <div style={{ maxWidth: "620px" }}>
+              <h4 style={{ fontSize: "16px", fontWeight: 700, color: "var(--text-primary)", marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <KonohaLeafSymbol size={18} color="var(--action-primary)" />
+                <span>The Brain Drain Winning Philosophy</span>
+              </h4>
+              <p style={{ fontSize: "13.5px", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                Forget traditional contests where only #1 matters. Here, <strong>2nd place is the jackpot</strong>, 
+                anyone can win the <strong>Mystery Rank</strong>, and the <strong>Last 5 Dare</strong> keeps the excitement blazing till the very end!
+              </p>
+            </div>
           </div>
           <button
             className="btn-primary"
             onClick={() => window.dispatchEvent(new CustomEvent("open-register-modal"))}
-            style={{ fontSize: "13px", height: "42px", padding: "0 20px" }}
+            style={{ fontSize: "13px", height: "44px", padding: "0 22px", flexShrink: 0 }}
           >
             Claim Your Spot →
           </button>

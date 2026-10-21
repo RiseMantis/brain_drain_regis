@@ -209,7 +209,7 @@ export default function HeroSection() {
             pointerEvents: "none",
           }}
         >
-          {/* Gaara — right side, peering in */}
+          {/* Gaara of the Sand — foreground right */}
           <Image
             src="/characters/gaara.png"
             alt="Gaara of the Desert"
@@ -219,30 +219,29 @@ export default function HeroSection() {
             style={{
               position: "absolute",
               bottom: 0,
-              right: "clamp(0px, 2vw, 40px)",
+              right: "clamp(0px, 2vw, 30px)",
               height: "clamp(340px, 60vh, 580px)",
               width: "auto",
               objectFit: "contain",
-              filter: "drop-shadow(0 0 32px rgba(200,16,46,0.35))",
+              filter: "drop-shadow(0 0 32px rgba(200,16,46,0.45))",
               zIndex: 4,
             }}
           />
-          {/* Naruto (scroll pose) — further right, slightly behind */}
+          {/* Sage Mode Naruto — duo partner with giant scroll */}
           <Image
             src="/characters/naruto-scroll.png"
-            alt="Naruto Uzumaki"
+            alt="Naruto Uzumaki - Sage Mode"
             width={380}
             height={524}
             priority
             style={{
               position: "absolute",
               bottom: 0,
-              right: "clamp(220px, 22vw, 340px)",
-              height: "clamp(280px, 50vh, 480px)",
+              right: "clamp(200px, 20vw, 320px)",
+              height: "clamp(300px, 54vh, 520px)",
               width: "auto",
               objectFit: "contain",
-              filter: "drop-shadow(0 0 28px rgba(249,109,46,0.3))",
-              opacity: 0.88,
+              filter: "drop-shadow(0 0 32px rgba(249,109,46,0.45))",
               zIndex: 3,
             }}
           />
