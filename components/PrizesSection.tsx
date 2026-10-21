@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
 import { KonohaLeafSymbol, ShurikenIcon, KunaiIcon, UzumakiSpiral, AkatsukiCloud, EightGatesFlame, NarutoCharacterTag } from "./NarutoSymbols";
 
@@ -18,6 +19,9 @@ const PRIZES = [
     perks: ["Largest Cash Share", "Certificate of Merit", "IEEE-CS SPIT Recognition", "Ultimate Shinobi Bragging Rights"],
     featured: true,
     accentColor: "var(--action-primary)",
+    glowColor: "rgba(249, 109, 46, 0.7)",
+    glowColorSoft: "rgba(249, 109, 46, 0.4)",
+    borderColor: "rgba(249, 109, 46, 0.6)",
     chipClass: "chip-orange",
     badge: "⭐ Grand Twist — Biggest Prize",
     symbol: <KunaiIcon size={24} color="var(--action-primary)" rotate={45} />,
@@ -36,6 +40,9 @@ const PRIZES = [
     perks: ["Cash Reward", "Certificate of Excellence", "IEEE-CS SPIT Recognition"],
     featured: false,
     accentColor: "var(--color-secondary-400)",
+    glowColor: "rgba(112, 174, 219, 0.7)",
+    glowColorSoft: "rgba(112, 174, 219, 0.4)",
+    borderColor: "rgba(112, 174, 219, 0.6)",
     chipClass: "chip-blue",
     badge: "Top Leaderboard",
     symbol: <KonohaLeafSymbol size={24} color="var(--color-secondary-400)" />,
@@ -54,6 +61,9 @@ const PRIZES = [
     perks: ["Surprise Cash Reward", "Certificate of Participation", "Lucky Shinobi Honor"],
     featured: false,
     accentColor: "var(--color-accent-400)",
+    glowColor: "rgba(237, 233, 60, 0.7)",
+    glowColorSoft: "rgba(237, 233, 60, 0.4)",
+    borderColor: "rgba(237, 233, 60, 0.6)",
     chipClass: "chip",
     badge: "Chaos Multiplier",
     symbol: <AkatsukiCloud size={24} />,
@@ -72,6 +82,9 @@ const PRIZES = [
     perks: ["Special Cash Reward", "Crowd Favorite Certificate", "Dare Legend Title"],
     featured: false,
     accentColor: "var(--color-akatsuki-red)",
+    glowColor: "rgba(200, 16, 46, 0.7)",
+    glowColorSoft: "rgba(200, 16, 46, 0.4)",
+    borderColor: "rgba(200, 16, 46, 0.6)",
     chipClass: "chip-orange",
     badge: "Fun & Absurdity",
     symbol: <EightGatesFlame size={24} />,
@@ -90,6 +103,26 @@ export default function PrizesSection() {
         overflow: "hidden",
       }}
     >
+      {/* Naru2 decorative character — left edge */}
+      <Image
+        src="/characters/naru2-scroll.png"
+        alt=""
+        aria-hidden="true"
+        width={414}
+        height={603}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: "-30px",
+          height: "clamp(240px, 38vw, 440px)",
+          width: "auto",
+          objectFit: "contain",
+          opacity: 0.18,
+          filter: "drop-shadow(0 0 24px rgba(249,109,46,0.2))",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "52px" }} className="reveal-on-scroll">
@@ -140,41 +173,56 @@ export default function PrizesSection() {
                 flexDirection: "column",
               }}
             >
+              {/* Top accent bar */}
+              <div
+                style={{
+                  height: "3px",
+                  background: prize.featured
+                    ? "var(--gradient-naruto)"
+                    : prize.accentColor,
+                  boxShadow: prize.featured
+                    ? "0 0 16px rgba(249, 109, 46, 0.85)"
+                    : `0 0 12px ${prize.glowColor}`,
+                  width: "100%",
+                  borderTopLeftRadius: "20px",
+                  borderTopRightRadius: "20px",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              />
+
               {/* Featured / badge pill */}
               <div
                 style={{
                   position: "absolute",
-                  top: "-12px",
+                  top: "-13px",
                   left: "50%",
                   transform: "translateX(-50%)",
-                  zIndex: 2,
+                  zIndex: 10,
+                  pointerEvents: "none",
                 }}
               >
                 <span
-                  className={prize.featured ? "chip chip-orange" : "chip chip-blue"}
                   style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    padding: "3px 12px",
+                    background: "var(--page-bg-secondary, #2a2b35)",
+                    color: prize.featured ? "var(--color-primary-400)" : prize.accentColor,
                     fontSize: "10.5px",
-                    boxShadow: prize.featured ? "0 0 14px rgba(249, 109, 46, 0.65)" : "none",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    borderRadius: "9999px",
+                    border: `1px solid ${prize.borderColor}`,
+                    boxShadow: `0 0 0 3px var(--page-bg-secondary, #2a2b35), 0 0 14px ${prize.glowColorSoft}`,
                     whiteSpace: "nowrap",
                   }}
                 >
                   {prize.badge}
                 </span>
               </div>
-
-              {/* Top accent bar */}
-              <div
-                style={{
-                  height: "4px",
-                  background: prize.featured
-                    ? "var(--gradient-naruto)"
-                    : prize.accentColor,
-                  boxShadow: prize.featured
-                    ? "0 0 16px rgba(249, 109, 46, 0.9)"
-                    : "none",
-                  width: "100%",
-                }}
-              />
 
               {/* Card body */}
               <div className="prize-card-body" style={{ padding: "28px 22px", flex: 1, display: "flex", flexDirection: "column" }}>

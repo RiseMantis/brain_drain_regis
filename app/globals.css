@@ -116,40 +116,6 @@
   --nav-gradient: linear-gradient(to bottom, rgba(31, 32, 41, 0.8) 0%, transparent 100%);
 }
 
-/* ── Light Mode Semantic Tokens ── */
-[data-theme="light"] {
-  --page-bg: var(--bg-page);
-  --page-bg-secondary: var(--color-neutral-200);
-  --surface: var(--bg-surface);
-  --surface-raised: var(--color-neutral-100);
-  --surface-overlay: rgba(250, 248, 242, 0.94);
-  --surface-overlay-border: rgba(31, 32, 41, 0.12);
-
-  --text-primary: var(--color-neutral-900);
-  --text-secondary: var(--color-neutral-700);
-  --text-muted: var(--color-neutral-600);
-  --text-inverse: var(--color-neutral-50);
-  --text-on-dark: var(--color-neutral-100);
-
-  --border-subtle: rgba(31, 32, 41, 0.08);
-  --border-default: rgba(31, 32, 41, 0.16);
-  --divider: rgba(31, 32, 41, 0.14);
-
-  --action-primary: var(--color-primary-600);
-  --action-primary-hover: var(--color-primary-700);
-  --action-primary-pressed: var(--color-primary-800);
-
-  --cta-bg: var(--color-primary-500);
-  --cta-hover: var(--color-primary-600);
-
-  --link: var(--color-secondary-600);
-  --focus-ring: var(--color-secondary-600);
-  --banner-bg: var(--color-neutral-50);
-  --chip-bg: rgba(31, 32, 41, 0.07);
-  --chip-text: var(--color-neutral-700);
-  --nav-bg-scrolled: rgba(239, 234, 223, 0.95);
-  --nav-gradient: linear-gradient(to bottom, rgba(239, 234, 223, 0.88) 0%, transparent 100%);
-}
 
 /* ── Reset & Base ── */
 *,
@@ -482,13 +448,6 @@ body {
     linear-gradient(to top, rgba(31, 32, 41, 0.95) 0%, rgba(31, 32, 41, 0.3) 35%, transparent 55%),
     linear-gradient(to bottom, rgba(31, 32, 41, 0.75) 0%, transparent 28%),
     linear-gradient(to right, rgba(31, 32, 41, 0.25) 0%, transparent 35%);
-}
-[data-theme="light"] .hero-vignette {
-  background:
-    radial-gradient(ellipse at 30% 50%, transparent 25%, rgba(239, 234, 223, 0.45) 90%),
-    linear-gradient(to top, rgba(239, 234, 223, 0.92) 0%, rgba(239, 234, 223, 0.35) 35%, transparent 55%),
-    linear-gradient(to bottom, rgba(31, 32, 41, 0.45) 0%, transparent 25%),
-    linear-gradient(to right, rgba(239, 234, 223, 0.2) 0%, transparent 35%);
 }
 
 /* ── Shimmer metric text ── */
@@ -1100,14 +1059,6 @@ body {
   100% { filter: brightness(1.5) drop-shadow(0 0 16px rgba(249, 109, 46, 0.45)); }
 }
 
-/* Light Theme Adaptation */
-[data-theme="light"] .fire-tab,
-[data-theme="light"] .round-card,
-[data-theme="light"] .prize-card {
-  background: linear-gradient(155deg, var(--color-neutral-50) 0%, var(--color-primary-50) 100%) !important;
-  border-color: rgba(224, 85, 23, 0.25) !important;
-  box-shadow: 0 8px 24px rgba(224, 85, 23, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-}
 [data-theme="light"] .fire-tab:hover,
 [data-theme="light"] .round-card:hover,
 [data-theme="light"] .prize-card:hover {

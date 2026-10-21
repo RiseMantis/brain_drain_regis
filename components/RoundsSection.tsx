@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
 import { ShurikenIcon, KunaiIcon, KonohaLeafSymbol, UzumakiSpiral, SharinganIcon, NarutoCharacterTag } from "./NarutoSymbols";
 
@@ -106,6 +107,26 @@ export default function RoundsSection() {
         overflow: "hidden",
       }}
     >
+      {/* Gaara decorative character — right edge */}
+      <Image
+        src="/characters/gaara.png"
+        alt=""
+        aria-hidden="true"
+        width={380}
+        height={656}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: "-20px",
+          height: "clamp(260px, 40vw, 500px)",
+          width: "auto",
+          objectFit: "contain",
+          opacity: 0.15,
+          filter: "drop-shadow(0 0 24px rgba(200,16,46,0.2))",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Section header */}
         <div style={{ marginBottom: "52px", maxWidth: "660px" }} className="reveal-on-scroll">

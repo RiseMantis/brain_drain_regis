@@ -5,136 +5,7 @@ import Image from "next/image";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
 import { ShurikenIcon, KunaiIcon, KonohaLeafSymbol, ShinobiHeadbandPlate, NarutoCharacterTag, AkatsukiCloud } from "./NarutoSymbols";
 
-function MissionCard() {
-  return (
-    <div
-      className="floating-card animate-float"
-      style={{
-        position: "absolute",
-        top: "clamp(72px, 10%, 110px)",
-        right: "clamp(20px, 6%, 64px)",
-        width: "clamp(280px, 30vw, 360px)",
-        padding: "20px 22px",
-        zIndex: 10,
-      }}
-    >
-      {/* Top row: chips + thumbnail */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: "10px", marginBottom: "12px" }}>
-        <div style={{ flex: 1 }}>
-          <p
-            className="eyebrow"
-            style={{ marginBottom: "8px", color: "var(--action-primary)", display: "flex", alignItems: "center", gap: "6px" }}
-          >
-            <ShurikenIcon size={14} color="var(--action-primary)" />
-            <span>{EVENT_CONFIG.date} · 5:00 PM Onwards</span>
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-            <span className="chip chip-orange">Solo & Duo Welcome</span>
-            <span className="chip chip-blue">6 Rapid Rounds</span>
-            <span className="chip chip-green">Prize: {EVENT_CONFIG.prizePool}</span>
-          </div>
-        </div>
-        {/* Thumbnail */}
-        <div
-          style={{
-            width: "70px",
-            height: "52px",
-            borderRadius: "10px",
-            overflow: "hidden",
-            flexShrink: 0,
-            position: "relative",
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
-          <Image
-            src="/mission-thumb.jpg"
-            alt="Brain Drain Mission Teaser"
-            fill
-            sizes="70px"
-            style={{ objectFit: "cover" }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "rgba(0,0,0,0.3)",
-            }}
-          >
-            <div
-              style={{
-                width: "22px",
-                height: "22px",
-                borderRadius: "50%",
-                background: "rgba(255,255,255,0.92)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <svg width="8" height="9" viewBox="0 0 8 9" fill="none">
-                <path d="M2 1.5l4 3-4 3V1.5z" fill="#17191f" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Heading */}
-      <h3
-        style={{
-          fontSize: "17px",
-          fontWeight: 700,
-          lineHeight: 1.2,
-          color: "var(--text-primary)",
-          marginBottom: "6px",
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-        }}
-      >
-        <span>Where logic gets thrown out the window.</span>
-      </h3>
-
-      {/* Description */}
-      <p
-        style={{
-          fontSize: "12px",
-          color: "var(--text-muted)",
-          marginBottom: "12px",
-          lineHeight: 1.45,
-        }}
-      >
-        2nd place gets the biggest prize! Random rank rewards, logic-bending quizzes, and a bottom-5 dare showdown.
-      </p>
-
-      {/* Metadata row */}
-      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-        <span className="meta-chip">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <rect x="1" y="2" width="10" height="9" rx="1.5" />
-            <line x1="8" y1="1" x2="8" y2="3.5" />
-            <line x1="4" y1="1" x2="4" y2="3.5" />
-            <line x1="1" y1="5" x2="11" y2="5" />
-          </svg>
-          28 Oct 2026 · Starts 5:00 PM Onwards
-        </span>
-        <span className="meta-chip">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M6 1a3.5 3.5 0 0 0-3.5 3.5C2.5 7.5 6 11 6 11s3.5-3.5 3.5-6.5A3.5 3.5 0 0 0 6 1z" />
-            <circle cx="6" cy="4.5" r="1.2" />
-          </svg>
-          SPIT, Mumbai
-        </span>
-        <span className="meta-chip" style={{ color: "var(--action-primary)" }}>
-          FE Students Only
-        </span>
-      </div>
-    </div>
-  );
-}
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
@@ -329,15 +200,52 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Decorative floating card */}
+        {/* Character art — Naruto & Gaara flanking the hero */}
         <div
           className="hero-right-col"
           style={{
-            transform: `translate3d(0, ${scrollY * -0.08}px, 0)`,
+            transform: `translate3d(0, ${scrollY * -0.06}px, 0)`,
             transition: "transform 0.05s linear",
+            pointerEvents: "none",
           }}
         >
-          <MissionCard />
+          {/* Gaara — right side, peering in */}
+          <Image
+            src="/characters/gaara.png"
+            alt="Gaara of the Desert"
+            width={340}
+            height={586}
+            priority
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: "clamp(0px, 2vw, 40px)",
+              height: "clamp(340px, 60vh, 580px)",
+              width: "auto",
+              objectFit: "contain",
+              filter: "drop-shadow(0 0 32px rgba(200,16,46,0.35))",
+              zIndex: 4,
+            }}
+          />
+          {/* Naruto (scroll pose) — further right, slightly behind */}
+          <Image
+            src="/characters/naruto-scroll.png"
+            alt="Naruto Uzumaki"
+            width={380}
+            height={524}
+            priority
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: "clamp(220px, 22vw, 340px)",
+              height: "clamp(280px, 50vh, 480px)",
+              width: "auto",
+              objectFit: "contain",
+              filter: "drop-shadow(0 0 28px rgba(249,109,46,0.3))",
+              opacity: 0.88,
+              zIndex: 3,
+            }}
+          />
         </div>
       </div>
 
