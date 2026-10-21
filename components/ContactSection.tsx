@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import RegistrationModal from "./RegistrationModal";
 import { EVENT_CONFIG } from "@/constants/eventConfig";
-import { KonohaLeafSymbol, KunaiIcon, ShurikenIcon } from "./NarutoSymbols";
+import { KonohaLeafSymbol, ShurikenIcon } from "./NarutoSymbols";
 
 const SOCIAL_LINKS = [
   {
@@ -126,26 +126,6 @@ export default function ContactSection() {
                   <line x1="10" y1="14" x2="21" y2="3" />
                 </svg>
               </a>
-              <button
-                className="link-secondary"
-                id="contact-register-btn"
-                style={{
-                  height: "50px",
-                  fontSize: "13.5px",
-                  padding: "0 20px",
-                  background: "var(--surface)",
-                  borderRadius: "12px",
-                  border: "1px solid var(--border-default)",
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-                onClick={() => setModalOpen(true)}
-              >
-                <KunaiIcon size={16} color="var(--action-primary)" rotate={45} />
-                <span>Register (Solo / Duo)</span>
-              </button>
               <a
                 href="#faq"
                 className="link-secondary"
